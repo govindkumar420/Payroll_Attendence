@@ -1,186 +1,22 @@
 import { jsx } from "react/jsx-runtime";
 import { createContext, useContext, useState, useEffect } from "react";
-import { RIDDHI_SIDDHI_EMPLOYEES, RIDDHI_SIDDHI_PAYROLL_JUN_2024, RIDDHI_SIDDHI_PAYROLL_AUG_2026, getNextEmployeeCode } from "../data/riddhiSiddhiData";
+import { getNextEmployeeCode } from "../utils/employeeCode";
 const StateContext = createContext(void 0);
+const APP_ROLES = ["Super Admin", "HR Manager", "Payroll Manager", "Department Manager", "Employee", "Accountant"];
 const INITIAL_SHIFTS = [
   { id: "S1", name: "Morning Shift", startTime: "09:00", endTime: "17:00", breakTime: 45, gracePeriod: 15, weeklyOff: "Sunday" },
   { id: "S2", name: "Evening Shift", startTime: "17:00", endTime: "01:00", breakTime: 45, gracePeriod: 15, weeklyOff: "Sunday" },
   { id: "S3", name: "Night Shift", startTime: "21:00", endTime: "05:00", breakTime: 45, gracePeriod: 15, weeklyOff: "Sunday" },
   { id: "S4", name: "Flexible Shift", startTime: "00:00", endTime: "23:59", breakTime: 60, gracePeriod: 0, weeklyOff: "Sunday" }
 ];
-const INITIAL_EMPLOYEES = RIDDHI_SIDDHI_EMPLOYEES;
-const INITIAL_HOLIDAYS = [
-  { id: "H1", date: "2026-01-01", name: "New Year Day", type: "National" },
-  { id: "H2", date: "2026-01-26", name: "Republic Day", type: "National" },
-  { id: "H3", date: "2026-05-01", name: "May Day", type: "Company" },
-  { id: "H4", date: "2026-08-15", name: "Independence Day", type: "National" },
-  { id: "H5", date: "2026-10-02", name: "Gandhi Jayanti", type: "National" },
-  { id: "H6", date: "2026-12-25", name: "Christmas Day", type: "Festival" }
-];
-const INITIAL_LEAVES = [
-  {
-    id: "L-001",
-    employeeId: "EMP-005",
-    leaveType: "Sick",
-    fromDate: "2026-08-03",
-    toDate: "2026-08-04",
-    reason: "Severe dental work required",
-    status: "HR Verified",
-    appliedDate: "2026-08-01"
-  },
-  {
-    id: "L-002",
-    employeeId: "EMP-004",
-    leaveType: "Casual",
-    fromDate: "2026-08-10",
-    toDate: "2026-08-11",
-    reason: "Cybernetic system maintenance & diagnostics",
-    status: "Approved by Manager",
-    appliedDate: "2026-08-06"
-  },
-  {
-    id: "L-003",
-    employeeId: "EMP-002",
-    leaveType: "Paid",
-    fromDate: "2026-08-20",
-    toDate: "2026-08-22",
-    reason: "Family out of town event",
-    status: "Pending Approval",
-    appliedDate: "2026-08-07"
-  }
-];
-const INITIAL_LOANS = [
-  {
-    id: "LN-001",
-    employeeId: "EMP-005",
-    type: "Salary Advance",
-    amount: 1e3,
-    emis: 4,
-    monthlyDeduction: 250,
-    remainingBalance: 750,
-    // 1 EMI paid
-    status: "Disbursed",
-    appliedDate: "2026-07-10",
-    approvedDate: "2026-07-12"
-  },
-  {
-    id: "LN-002",
-    employeeId: "EMP-004",
-    type: "Loan",
-    amount: 5e3,
-    emis: 10,
-    monthlyDeduction: 500,
-    remainingBalance: 5e3,
-    status: "Pending",
-    appliedDate: "2026-08-05"
-  }
-];
-const generateMockAttendance = () => {
-  const records = [];
-  const employees = INITIAL_EMPLOYEES;
-  const holidays = INITIAL_HOLIDAYS;
-  for (let day = 1; day <= 7; day++) {
-    const dateStr = `2026-08-0${day}`;
-    const dayOfWeek = new Date(dateStr).getDay();
-    const isSunday = dayOfWeek === 0;
-    const holiday = holidays.find((h) => h.date === dateStr);
-    employees.forEach((emp) => {
-      const recId = `${emp.id}_${dateStr}`;
-      const leave = INITIAL_LEAVES.find(
-        (l) => l.employeeId === emp.id && l.status === "HR Verified" && dateStr >= l.fromDate && dateStr <= l.toDate
-      );
-      if (isSunday) {
-        records.push({
-          id: recId,
-          employeeId: emp.id,
-          date: dateStr,
-          checkIn: "",
-          checkOut: "",
-          workingHours: 0,
-          breakTime: 0,
-          overtime: 0,
-          lateArrival: false,
-          earlyLeaving: false,
-          status: "Weekly Off"
-        });
-      } else if (holiday) {
-        records.push({
-          id: recId,
-          employeeId: emp.id,
-          date: dateStr,
-          checkIn: "",
-          checkOut: "",
-          workingHours: 0,
-          breakTime: 0,
-          overtime: 0,
-          lateArrival: false,
-          earlyLeaving: false,
-          status: "Holiday"
-        });
-      } else if (leave) {
-        records.push({
-          id: recId,
-          employeeId: emp.id,
-          date: dateStr,
-          checkIn: "",
-          checkOut: "",
-          workingHours: 0,
-          breakTime: 0,
-          overtime: 0,
-          lateArrival: false,
-          earlyLeaving: false,
-          status: "Leave"
-        });
-      } else {
-        let checkIn = "09:00";
-        let checkOut = "17:00";
-        let lateArrival = false;
-        let earlyLeaving = false;
-        let workingHours = 7.25;
-        let status = "Present";
-        if (emp.id === "EMP-004") {
-          checkIn = "20:55";
-          checkOut = "05:05";
-          workingHours = 8.2;
-        } else {
-          if (day === 5) {
-            checkIn = "09:35";
-            checkOut = "17:00";
-            lateArrival = true;
-            workingHours = 6.6;
-          } else if (day === 6) {
-            checkIn = "08:58";
-            checkOut = "16:15";
-            earlyLeaving = true;
-            workingHours = 6.5;
-          }
-        }
-        records.push({
-          id: recId,
-          employeeId: emp.id,
-          date: dateStr,
-          checkIn,
-          checkOut,
-          workingHours,
-          breakTime: 45,
-          overtime: day === 4 ? 2.5 : 0,
-          // overtime on Day 4
-          lateArrival,
-          earlyLeaving,
-          status
-        });
-      }
-    });
-  }
-  return records;
-};
-const INITIAL_PAYROLL = [
-  ...RIDDHI_SIDDHI_PAYROLL_JUN_2024,
-  ...RIDDHI_SIDDHI_PAYROLL_AUG_2026
-];
+const INITIAL_EMPLOYEES = [];
+const INITIAL_LEAVES = [];
+const INITIAL_LOANS = [];
+const INITIAL_PAYROLL = [];
 const StateProvider = ({ children }) => {
   const [theme, setThemeState] = useState("dark");
   const [activeRole, setActiveRoleState] = useState("Super Admin");
+  const [isAdministratorSession, setIsAdministratorSession] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [personaPhotos, setPersonaPhotos] = useState({
     "Super Admin": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
@@ -191,15 +27,15 @@ const StateProvider = ({ children }) => {
     "Accountant": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150"
   });
   const [companyProfile, setCompanyProfile] = useState({
-    name: "RIDDHI SIDDHI ENTERPRISES",
-    address: "G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018",
+    name: "Gnosis Ventures",
+    address: "",
     tagline: "Payroll & Attendance Operations"
   });
   const [employees, setEmployees] = useState(INITIAL_EMPLOYEES);
-  const [attendance, setAttendance] = useState(generateMockAttendance());
+  const [attendance, setAttendance] = useState([]);
   const [shifts, setShifts] = useState(INITIAL_SHIFTS);
   const [leaves, setLeaves] = useState(INITIAL_LEAVES);
-  const [holidays, setHolidays] = useState(INITIAL_HOLIDAYS);
+  const [holidays, setHolidays] = useState([]);
   const [loans, setLoans] = useState(INITIAL_LOANS);
   const [payroll, setPayroll] = useState(INITIAL_PAYROLL);
   const [auditLogs, setAuditLogs] = useState([]);
@@ -209,12 +45,14 @@ const StateProvider = ({ children }) => {
   }, [theme]);
   const login = (role) => {
     setActiveRoleState(role);
+    setIsAdministratorSession(role === "Super Admin");
     setIsLoggedIn(true);
     addAuditLog("User Login", `Successfully logged in as ${role}`);
     triggerSyncNotification(`\u{1F44B} Welcome back! Authenticated as ${role}`);
   };
   const logout = () => {
     setIsLoggedIn(false);
+    setIsAdministratorSession(false);
     addAuditLog("User Logout", `Logged out from ${activeRole} session`);
     triggerSyncNotification(`\u{1F6AA} Signed out from ${activeRole} session`);
   };
@@ -224,8 +62,13 @@ const StateProvider = ({ children }) => {
     triggerSyncNotification(`\u{1F4F8} Profile picture updated for ${role}`);
   };
   const updateUserPassword = (role, _newPass) => {
+    if (!isAdministratorSession) {
+      triggerSyncNotification("Only the administrator can change account credentials.");
+      return false;
+    }
     addAuditLog("Password Reset", `Password changed successfully for ${role}`);
     triggerSyncNotification(`\u{1F511} Password updated successfully for ${role}`);
+    return true;
   };
   const updateCompanyProfile = (profile) => {
     setCompanyProfile((prev) => ({ ...prev, ...profile }));
@@ -481,10 +324,7 @@ const StateProvider = ({ children }) => {
       const activeLoan = loans.find((l) => l.employeeId === emp.id && l.status === "Disbursed");
       const loanEmi = activeLoan ? activeLoan.monthlyDeduction : 0;
       const sal = emp.salaryStructure;
-      let calculatedOvertimeEarnings = overtimeHours * sal.overtimeRate;
-      if (emp.id === "200050" && (month === "2024-06" || month === "2026-08")) {
-        calculatedOvertimeEarnings = 7006;
-      }
+      const calculatedOvertimeEarnings = overtimeHours * sal.overtimeRate;
       const dailyBasic = sal.basic / (workdaysExpected || 30);
       const leaveDeduction = calculatedAbsent > 0 ? Math.round(calculatedAbsent * dailyBasic) : 0;
       const lateArrivalsCount = empAtt.filter((a) => a.lateArrival).length;
@@ -500,8 +340,8 @@ const StateProvider = ({ children }) => {
       const bonus = sal.bonus || 0;
       const incentive = sal.incentive || 0;
       const grossSalary = basic + hra + da + conveyance + medical + specialAllowance + otherAllowance + leaveEncashment + bonus + incentive + calculatedOvertimeEarnings;
-      const pf = emp.id === "200050" ? 1376 : Math.round(basic * 0.12);
-      const esi = emp.id === "200050" ? 151 : grossSalary <= 21e3 ? Math.round(grossSalary * 75e-4) : 0;
+      const pf = Math.round(basic * 0.12);
+      const esi = grossSalary <= 21e3 ? Math.round(grossSalary * 75e-4) : 0;
       const pt = 200;
       const lwf = 1;
       const otherDeduction = 0;
@@ -517,10 +357,10 @@ const StateProvider = ({ children }) => {
         employeeId: emp.id,
         month,
         totalDays: totalMonthDays,
-        presentDays: emp.id === "200050" ? 30 : Math.max(0, presentDays - halfDays * 0.5),
-        absentDays: emp.id === "200050" ? 0 : calculatedAbsent + halfDays * 0.5,
-        leaveDays: emp.id === "200050" ? 0 : leaveDays,
-        overtimeHours: emp.id === "200050" ? 46.7 : overtimeHours,
+        presentDays: Math.max(0, presentDays - halfDays * 0.5),
+        absentDays: calculatedAbsent + halfDays * 0.5,
+        leaveDays,
+        overtimeHours,
         earnings: {
           basic,
           hra,
@@ -601,8 +441,16 @@ const StateProvider = ({ children }) => {
     triggerSyncNotification(`\u{1F4E7} Notification sent: Payslips emailed to all active employees.`);
   };
   const setActiveRole = (role) => {
+    if (!isAdministratorSession) {
+      triggerSyncNotification("Only the administrator can switch roles.");
+      return false;
+    }
+    if (!APP_ROLES.includes(role)) {
+      throw new Error(`Unknown application role: ${role}`);
+    }
     setActiveRoleState(role);
     addAuditLog("Role Switch", `Switched active workspace session to: ${role}`);
+    return true;
   };
   const setAttendanceRecords = (records) => {
     setAttendance(records);
@@ -611,6 +459,7 @@ const StateProvider = ({ children }) => {
     theme,
     setTheme: setThemeState,
     activeRole,
+    isAdministratorSession,
     setActiveRole,
     companyProfile,
     updateCompanyProfile,

@@ -56,7 +56,7 @@ const RoleCredentialsModal = ({
               justifyContent: "space-between",
               alignItems: "center",
               padding: isFullScreen ? "18px 32px" : "16px 24px",
-              background: "linear-gradient(135deg, rgba(99, 102, 241, 0.18) 0%, rgba(6, 182, 212, 0.18) 100%)",
+              background: "linear-gradient(135deg, rgba(0, 143, 131, 0.18) 0%, rgba(0, 150, 136, 0.18) 100%)",
               borderBottom: "1px solid var(--border-color-solid)",
               flexShrink: 0
             }, children: [
@@ -70,7 +70,7 @@ const RoleCredentialsModal = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 0 12px rgba(99, 102, 241, 0.25)"
+                  boxShadow: "0 0 12px rgba(0, 143, 131, 0.25)"
                 }, children: /* @__PURE__ */ jsx(KeyRound, { size: 24 }) }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsxs("h2", { style: { fontSize: isFullScreen ? "20px" : "17px", fontWeight: 800, margin: 0, display: "flex", alignItems: "center", gap: "10px" }, children: [

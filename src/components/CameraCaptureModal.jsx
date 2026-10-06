@@ -126,7 +126,7 @@ const CameraCaptureModal = ({
     const bannerHeight = Math.max(64, Math.floor(height * 0.16));
     ctx.fillStyle = "rgba(9, 13, 22, 0.85)";
     ctx.fillRect(0, height - bannerHeight, width, bannerHeight);
-    ctx.fillStyle = "#06b6d4";
+    ctx.fillStyle = "#009688";
     ctx.fillRect(0, height - bannerHeight, width, 3);
     ctx.fillStyle = "#ffffff";
     ctx.font = `bold ${Math.max(14, Math.floor(width * 0.024))}px 'Plus Jakarta Sans', sans-serif`;
@@ -161,7 +161,7 @@ const CameraCaptureModal = ({
     ctx.fillStyle = "#334155";
     ctx.fill();
     ctx.lineWidth = 4;
-    ctx.strokeStyle = "#22d3ee";
+    ctx.strokeStyle = "#2dd4bf";
     ctx.stroke();
     ctx.beginPath();
     ctx.arc(width / 2, height / 2 - 40, 45, 0, Math.PI * 2);
@@ -179,7 +179,7 @@ const CameraCaptureModal = ({
     ctx.fillText("FACIAL MATCH: 99.8%", width / 2 - 95, height / 2 - 130);
     ctx.fillStyle = "rgba(9, 13, 22, 0.9)";
     ctx.fillRect(0, height - 70, width, 70);
-    ctx.fillStyle = "#06b6d4";
+    ctx.fillStyle = "#009688";
     ctx.fillRect(0, height - 70, width, 3);
     ctx.fillStyle = "#ffffff";
     ctx.font = "bold 15px sans-serif";
@@ -262,7 +262,7 @@ const CameraCaptureModal = ({
           justifyContent: "space-between",
           alignItems: "center",
           padding: "16px 20px",
-          background: "linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(6, 182, 212, 0.12) 100%)",
+          background: "linear-gradient(135deg, rgba(0, 143, 131, 0.12) 0%, rgba(0, 150, 136, 0.12) 100%)",
           borderBottom: "1px solid var(--border-color-solid)"
         }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
@@ -311,7 +311,7 @@ const CameraCaptureModal = ({
             fontSize: "12px"
           }, children: [
             /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-              /* @__PURE__ */ jsx(MapPin, { size: 16, style: { color: "#06b6d4", flexShrink: 0 } }),
+              /* @__PURE__ */ jsx(MapPin, { size: 16, style: { color: "#009688", flexShrink: 0 } }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("strong", { children: "Office Geo-Fence:" }),
                 " ",
@@ -422,7 +422,7 @@ const CameraCaptureModal = ({
                 /* @__PURE__ */ jsx("span", { style: {
                   position: "absolute",
                   bottom: "-24px",
-                  color: "#22d3ee",
+                  color: "#2dd4bf",
                   fontSize: "10px",
                   fontWeight: 700,
                   letterSpacing: "1px",
@@ -584,10 +584,10 @@ const CameraCaptureModal = ({
                   style: {
                     fontSize: "13px",
                     padding: "10px 22px",
-                    background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)",
+                    background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)",
                     color: "#ffffff",
                     fontWeight: 700,
-                    boxShadow: "0 4px 14px rgba(6, 182, 212, 0.35)"
+                    boxShadow: "0 4px 14px rgba(0, 150, 136, 0.35)"
                   },
                   onClick: handleCapture,
                   disabled: !isCameraActive || isCapturing,

@@ -17,7 +17,7 @@ import {
 import { CompanyLogo } from "../components/CompanyLogo";
 import { EMPLOYEE_PERSONA_ID, MANAGER_DEPARTMENT, getPermissions } from "../utils/permissions";
 const Dashboard = () => {
-  const { employees, attendance, payroll, leaves, shifts, activeRole, setActiveRole, companyProfile, clockIn } = useAppState();
+  const { employees, attendance, payroll, leaves, shifts, activeRole, isAdministratorSession, setActiveRole, companyProfile, clockIn } = useAppState();
   const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
   const activeEmployees = employees.filter((e) => e.status === "Active");
   const permissions = getPermissions(activeRole);
@@ -28,7 +28,8 @@ const Dashboard = () => {
   const lateCount = todayAtt.filter((a) => a.lateArrival).length;
   const absentCount = Math.max(0, activeEmployees.length - presentCount - leaveCount - holidayCount);
   const totalOtHours = attendance.reduce((sum, rec) => sum + (rec.overtime || 0), 0);
-  const activeMonthPayroll = payroll.filter((p) => p.month === "2026-08");
+  const activeMonth = new Date().toISOString().slice(0, 7);
+  const activeMonthPayroll = payroll.filter((p) => p.month === activeMonth);
   const totalSalaryCost = activeMonthPayroll.reduce((sum, p) => sum + p.netSalary, 0);
   const grossSalaryCost = activeMonthPayroll.reduce((sum, p) => sum + p.earnings.grossSalary, 0);
   const totalPfDeduction = activeMonthPayroll.reduce((sum, p) => sum + (p.deductions?.pf || 0), 0);
@@ -47,32 +48,38 @@ const Dashboard = () => {
     return emp?.department === MANAGER_DEPARTMENT;
   });
   const currentEmp = employees.find((e) => e.id === EMPLOYEE_PERSONA_ID) || employees[0];
-  const empAttendanceLogs = attendance.filter((a) => a.employeeId === currentEmp.id);
+  const empAttendanceLogs = attendance.filter((a) => a.employeeId === currentEmp?.id);
   const empPresentDays = empAttendanceLogs.filter((a) => a.status === "Present" || a.status === "WFH").length;
-  const empTodayRec = todayAtt.find((a) => a.employeeId === currentEmp.id);
-  const empPayrollRec = payroll.find((p) => p.employeeId === currentEmp.id && p.month === "2026-08");
-  const empShift = shifts.find((s) => s.id === currentEmp.shiftId) || shifts[0];
-  const weeklyTrendData = [
-    { label: "Mon", present: 52, absent: 5 },
-    { label: "Tue", present: 54, absent: 3 },
-    { label: "Wed", present: 50, absent: 7 },
-    { label: "Thu", present: 55, absent: 2 },
-    { label: "Fri", present: 53, absent: 4 },
-    { label: "Sat", present: 48, absent: 9 },
-    { label: "Sun", present: 0, absent: 57 }
-  ];
+  const empTodayRec = todayAtt.find((a) => a.employeeId === currentEmp?.id);
+  const empPayrollRec = payroll.find((p) => p.employeeId === currentEmp?.id && p.month === activeMonth);
+  const empShift = currentEmp ? shifts.find((s) => s.id === currentEmp.shiftId) || shifts[0] : null;
+  const weeklyTrendData = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - index));
+    const dateString = date.toISOString().split("T")[0];
+    const records = attendance.filter((record) => record.date === dateString);
+    return {
+      label: date.toLocaleDateString("en", { weekday: "short" }),
+      present: records.filter((record) => record.status === "Present" || record.status === "WFH").length,
+      absent: records.filter((record) => record.status === "Absent").length
+    };
+  });
   const depts = employees.reduce((acc, curr) => {
     acc[curr.department] = (acc[curr.department] || 0) + 1;
     return acc;
   }, {});
   const deptData = Object.entries(depts).map(([name, count]) => ({ name, count }));
   const handleEmployeeClockIn = () => {
-    clockIn(currentEmp.id, "Self Web Terminal", "Jamnagar Office");
+    if (!currentEmp) return;
+    clockIn(currentEmp.id, "Self Web Terminal", currentEmp.location || "");
     alert("Attendance successfully punched for today!");
   };
+  if (activeRole === "Employee" && !currentEmp) {
+    return <div className="glass-card">No employee profile is linked to this account yet. Ask an administrator to create or assign your employee profile.</div>;
+  }
   return /* @__PURE__ */ jsxs("div", { className: "animate-fade-in", style: { display: "flex", flexDirection: "column", gap: "32px" }, children: [
     /* @__PURE__ */ jsxs("div", { className: "glass-card", style: {
-      background: "linear-gradient(135deg, #1b5a7a 0%, #0f2b3c 100%)",
+      background: "linear-gradient(135deg, #008f83 0%, #064e49 100%)",
       color: "white",
       border: "1px solid rgba(255, 255, 255, 0.15)",
       display: "flex",
@@ -81,7 +88,7 @@ const Dashboard = () => {
       padding: "24px 32px",
       flexWrap: "wrap",
       gap: "20px",
-      boxShadow: "0 8px 24px rgba(15, 43, 60, 0.35)"
+      boxShadow: "0 8px 24px rgba(6, 78, 73, 0.35)"
     }, children: [
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "20px" }, children: [
         /* @__PURE__ */ jsx("div", { style: { background: "white", padding: "8px", borderRadius: "16px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }, children: /* @__PURE__ */ jsx(CompanyLogo, { size: "lg" }) }),
@@ -92,14 +99,11 @@ const Dashboard = () => {
           ] }),
           /* @__PURE__ */ jsxs("p", { style: { opacity: 0.9, fontSize: "12px", marginTop: "4px", maxWidth: "600px", display: "flex", alignItems: "center", gap: "6px" }, children: [
             /* @__PURE__ */ jsx(MapPin, { size: 13, style: { color: "#38bdf8", flexShrink: 0 } }),
-            companyProfile.address
+            companyProfile.address || "Add your company address in Settings."
           ] }),
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: "12px", marginTop: "8px", fontSize: "11px", opacity: 0.85 }, children: [
             /* @__PURE__ */ jsxs("span", { children: [
-              "\u{1F4CD} Locations: ",
-              /* @__PURE__ */ jsx("strong", { children: "Cold Jamnagar" }),
-              " & ",
-              /* @__PURE__ */ jsx("strong", { children: "TML DEF Gandhidham" })
+              "\u{1F4CD} Workforce & Payroll Operations"
             ] }),
             /* @__PURE__ */ jsx("span", { children: "\u2022" }),
             /* @__PURE__ */ jsxs("span", { children: [
@@ -526,7 +530,7 @@ const Dashboard = () => {
                 /* @__PURE__ */ jsx("span", { style: { fontWeight: 600 }, children: "Employee Clock-in & Leaves" }),
                 /* @__PURE__ */ jsx("p", { style: { fontSize: "12px", color: "var(--text-muted)" }, children: "Apply for leaves or clock-in daily" })
               ] }),
-              /* @__PURE__ */ jsx("span", { className: "badge badge-info", style: { cursor: "pointer" }, onClick: () => setActiveRole("Employee"), children: "Switch to Employee" })
+              isAdministratorSession && /* @__PURE__ */ jsx("span", { className: "badge badge-info", style: { cursor: "pointer" }, onClick: () => setActiveRole("Employee"), children: "Switch to Employee" })
             ] }),
             /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
               /* @__PURE__ */ jsx("div", { style: { width: "28px", height: "28px", borderRadius: "50%", background: "var(--success-light)", color: "var(--success)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px" }, children: "2" }),
@@ -534,7 +538,7 @@ const Dashboard = () => {
                 /* @__PURE__ */ jsx("span", { style: { fontWeight: 600 }, children: "Manager Approval" }),
                 /* @__PURE__ */ jsx("p", { style: { fontSize: "12px", color: "var(--text-muted)" }, children: "Approve leaves and manage shift schedules" })
               ] }),
-              /* @__PURE__ */ jsx("span", { className: "badge badge-success", style: { cursor: "pointer" }, onClick: () => setActiveRole("Department Manager"), children: "Switch to Manager" })
+              isAdministratorSession && /* @__PURE__ */ jsx("span", { className: "badge badge-success", style: { cursor: "pointer" }, onClick: () => setActiveRole("Department Manager"), children: "Switch to Manager" })
             ] }),
             /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
               /* @__PURE__ */ jsx("div", { style: { width: "28px", height: "28px", borderRadius: "50%", background: "var(--warning-light)", color: "var(--warning)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px" }, children: "3" }),
@@ -542,7 +546,7 @@ const Dashboard = () => {
                 /* @__PURE__ */ jsx("span", { style: { fontWeight: 600 }, children: "HR Verification & Payroll Calc" }),
                 /* @__PURE__ */ jsx("p", { style: { fontSize: "12px", color: "var(--text-muted)" }, children: "Verify records, setup taxes and process monthly payslip runs" })
               ] }),
-              /* @__PURE__ */ jsx("span", { className: "badge badge-warning", style: { cursor: "pointer" }, onClick: () => setActiveRole("HR Manager"), children: "Switch to HR" })
+              isAdministratorSession && /* @__PURE__ */ jsx("span", { className: "badge badge-warning", style: { cursor: "pointer" }, onClick: () => setActiveRole("HR Manager"), children: "Switch to HR" })
             ] })
           ] })
         ] }),

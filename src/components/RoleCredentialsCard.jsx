@@ -5,64 +5,64 @@ import { KeyRound, Copy, Check, Eye, EyeOff, ShieldCheck, UserCheck, ArrowRight,
 const ROLE_CREDENTIALS = [
   {
     role: "Super Admin",
-    userId: "admin@riddhisiddhi.com",
+    userId: "admin@gnosisventures.com",
     password: "Admin@2026",
-    personaName: "Shejal",
-    email: "admin@riddhisiddhi.com",
+    personaName: "Administrator",
+    email: "admin@gnosisventures.com",
     scope: "Full System Access, System Config, Security & Backups",
     badgeClass: "badge-danger"
   },
   {
     role: "HR Manager",
-    userId: "hr@riddhisiddhi.com",
+    userId: "hr@gnosisventures.com",
     password: "Hr@2026#",
-    personaName: "Hiralben",
-    email: "sarah.connor@riddhisiddhi.com",
+    personaName: "HR Manager",
+    email: "hr@gnosisventures.com",
     scope: "Employee Directory, Onboarding, Leave Verification & Shifts",
     badgeClass: "badge-primary"
   },
   {
     role: "Payroll Manager",
-    userId: "payroll@riddhisiddhi.com",
+    userId: "payroll@gnosisventures.com",
     password: "Payroll@2026",
-    personaName: "Parth",
-    email: "marcus.wright@riddhisiddhi.com",
+    personaName: "Payroll Manager",
+    email: "payroll@gnosisventures.com",
     scope: "Salary Slips, Overtime & Loans Processing",
     badgeClass: "badge-warning"
   },
   {
     role: "Department Manager",
-    userId: "manager@riddhisiddhi.com",
+    userId: "manager@gnosisventures.com",
     password: "Manager@2026",
-    personaName: "Manas",
-    email: "john.connor@riddhisiddhi.com",
+    personaName: "Department Manager",
+    email: "manager@gnosisventures.com",
     scope: "Team Attendance & Leave Approvals",
     badgeClass: "badge-info"
   },
   {
     role: "Employee",
-    userId: "200050",
-    password: "Emp@200050",
-    personaName: "Vaghela Pushprajsinh",
-    email: "pushpraj.vaghela@riddhisiddhi.com",
+    userId: "EMP-000001",
+    password: "Emp@000001",
+    personaName: "Employee User",
+    email: "employee@gnosisventures.com",
     scope: "Self Attendance (GPS & Camera), Leaves & Payslips",
     badgeClass: "badge-success"
   },
   {
     role: "Accountant",
-    userId: "accountant@riddhisiddhi.com",
+    userId: "accountant@gnosisventures.com",
     password: "Accounts@2026",
     personaName: "Finance Desk",
-    email: "accounts@riddhisiddhi.com",
+    email: "accountant@gnosisventures.com",
     scope: "Tax Reports, TDS, PF / ESIC Disbursals",
     badgeClass: "badge-primary"
   }
 ];
 const RoleCredentialsCard = ({ fullScreen = false }) => {
-  const { activeRole, setActiveRole, triggerSyncNotification } = useAppState();
+  const { activeRole, isAdministratorSession, setActiveRole, triggerSyncNotification } = useAppState();
   const [showPasswords, setShowPasswords] = useState({});
   const [copiedField, setCopiedField] = useState(null);
-  const isSuperAdmin = activeRole === "Super Admin";
+  const isSuperAdmin = isAdministratorSession;
   const visibleCredentials = isSuperAdmin ? ROLE_CREDENTIALS : ROLE_CREDENTIALS.filter((c) => c.role === activeRole);
   const togglePasswordVisibility = (role) => {
     setShowPasswords((prev) => ({ ...prev, [role]: !prev[role] }));
@@ -73,7 +73,7 @@ const RoleCredentialsCard = ({ fullScreen = false }) => {
     triggerSyncNotification(`\u{1F4CB} Copied ${label} to clipboard`);
     setTimeout(() => setCopiedField(null), 2e3);
   };
-  return /* @__PURE__ */ jsxs("div", { className: "glass-card", style: { display: "flex", flexDirection: "column", gap: "18px", border: "1.5px solid rgba(99, 102, 241, 0.25)", flexGrow: fullScreen ? 1 : "unset" }, children: [
+  return /* @__PURE__ */ jsxs("div", { className: "glass-card", style: { display: "flex", flexDirection: "column", gap: "18px", border: "1.5px solid rgba(0, 143, 131, 0.25)", flexGrow: fullScreen ? 1 : "unset" }, children: [
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }, children: [
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
         /* @__PURE__ */ jsx("div", { style: {
@@ -119,7 +119,7 @@ const RoleCredentialsCard = ({ fullScreen = false }) => {
       ] }) })
     ] }),
     !isSuperAdmin && /* @__PURE__ */ jsxs("div", { style: {
-      background: "rgba(99, 102, 241, 0.08)",
+      background: "rgba(0, 143, 131, 0.08)",
       border: "1px solid var(--primary-light)",
       borderRadius: "8px",
       padding: "10px 14px",
@@ -197,7 +197,7 @@ const RoleCredentialsCard = ({ fullScreen = false }) => {
               borderRadius: "6px",
               fontSize: "12px",
               fontWeight: 700,
-              color: "#06b6d4",
+              color: "#009688",
               border: "1px solid var(--border-color-solid)",
               fontFamily: "monospace",
               minWidth: "120px",

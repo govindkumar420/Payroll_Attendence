@@ -138,7 +138,7 @@ const PERMISSION_MATRIX = {
     systemSettings: "None"
   }
 };
-const EMPLOYEE_PERSONA_ID = "200050";
+const EMPLOYEE_PERSONA_ID = "EMP-000001";
 const MANAGER_DEPARTMENT = "Operations";
 const getPermissions = (role) => {
   return PERMISSION_MATRIX[role] || PERMISSION_MATRIX["Employee"];

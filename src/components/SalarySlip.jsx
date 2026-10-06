@@ -5,13 +5,13 @@ import { CompanyLogo } from "./CompanyLogo";
 const SalarySlip = ({
   payroll,
   employee,
-  companyName = "RIDDHI SIDDHI ENTERPRISES",
-  companyAddress = "G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018",
+  companyName = "Gnosis Ventures",
+  companyAddress = "",
   onClose
 }) => {
   const slipRef = useRef(null);
   const formatMonth = (monthStr) => {
-    if (!monthStr) return "Jun-2024";
+    if (!monthStr) return "N/A";
     const parts = monthStr.split("-");
     if (parts.length === 2) {
       const year = parts[0];
@@ -22,7 +22,7 @@ const SalarySlip = ({
     return monthStr;
   };
   const formatDate = (dateStr) => {
-    if (!dateStr) return "17-Jul-23";
+    if (!dateStr) return "N/A";
     try {
       const d = new Date(dateStr);
       if (isNaN(d.getTime())) return dateStr;
@@ -120,19 +120,19 @@ Net Pay: \u20B9${payroll.netSalary}`;
       /* @__PURE__ */ jsx("table", { className: "slip-table emp-info-table", children: /* @__PURE__ */ jsxs("tbody", { children: [
         /* @__PURE__ */ jsxs("tr", { children: [
           /* @__PURE__ */ jsx("td", { className: "field-label", style: { width: "20%" }, children: "Employee Code:" }),
-          /* @__PURE__ */ jsx("td", { className: "field-value", style: { width: "30%" }, children: employee.id || "200050" }),
+          /* @__PURE__ */ jsx("td", { className: "field-value", style: { width: "30%" }, children: employee.id || "N/A" }),
           /* @__PURE__ */ jsx("td", { className: "field-label", style: { width: "22%" }, children: "Location" }),
-          /* @__PURE__ */ jsx("td", { className: "field-value", style: { width: "28%" }, children: employee.location || "Cold Jamnagar" })
+          /* @__PURE__ */ jsx("td", { className: "field-value", style: { width: "28%" }, children: employee.location || "N/A" })
         ] }),
         /* @__PURE__ */ jsxs("tr", { children: [
           /* @__PURE__ */ jsx("td", { className: "field-label", children: "Employee Name:" }),
-          /* @__PURE__ */ jsx("td", { className: "field-value", children: employee.name || "Vaghela Pushprajsinh" }),
+          /* @__PURE__ */ jsx("td", { className: "field-value", children: employee.name || "N/A" }),
           /* @__PURE__ */ jsx("td", { className: "field-label", children: "Designation:" }),
           /* @__PURE__ */ jsx("td", { className: "field-value", children: employee.designation || "Floor Associate" })
         ] }),
         /* @__PURE__ */ jsxs("tr", { children: [
           /* @__PURE__ */ jsx("td", { className: "field-label", children: "Date of Joining:" }),
-          /* @__PURE__ */ jsx("td", { className: "field-value", children: formatDate(employee.joiningDate || "2023-07-17") }),
+          /* @__PURE__ */ jsx("td", { className: "field-value", children: formatDate(employee.joiningDate) }),
           /* @__PURE__ */ jsx("td", { className: "field-label", children: "ESIC No.:" }),
           /* @__PURE__ */ jsx("td", { className: "field-value", children: employee.esiNumber || employee.esicNumber || "" })
         ] }),

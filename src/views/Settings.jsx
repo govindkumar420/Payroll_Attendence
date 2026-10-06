@@ -7,8 +7,8 @@ import { RoleCredentialsCard } from "../components/RoleCredentialsCard";
 import { getPermissions } from "../utils/permissions";
 const Settings = () => {
   const { auditLogs, activeRole, companyProfile, updateCompanyProfile, triggerSyncNotification, addAuditLog } = useAppState();
-  const [companyName, setCompanyName] = useState(companyProfile.name || "RIDDHI SIDDHI ENTERPRISES");
-  const [companyAddress, setCompanyAddress] = useState(companyProfile.address || "G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018");
+  const [companyName, setCompanyName] = useState(companyProfile.name || "Gnosis Ventures");
+  const [companyAddress, setCompanyAddress] = useState(companyProfile.address || "");
   const [tagline, setTagline] = useState(companyProfile.tagline || "Workforce & Payroll Operations");
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [mfaEnabled, setMfaEnabled] = useState(true);
@@ -111,7 +111,7 @@ const Settings = () => {
                   required: true,
                   value: companyName,
                   onChange: (e) => setCompanyName(e.target.value),
-                  placeholder: "RIDDHI SIDDHI ENTERPRISES",
+                  placeholder: "Gnosis Ventures",
                   style: { fontWeight: 700 }
                 }
               )
@@ -138,7 +138,7 @@ const Settings = () => {
                 required: true,
                 value: companyAddress,
                 onChange: (e) => setCompanyAddress(e.target.value),
-                placeholder: "G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018"
+                placeholder: "Enter company address"
               }
             )
           ] }),

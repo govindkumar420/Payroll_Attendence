@@ -22,7 +22,7 @@ const Attendance = () => {
   const isEmployee = activeRole === "Employee";
   const canClock = permissions.attendance === "Full" || permissions.attendance === "Manage" || permissions.attendance === "Team" || permissions.attendance === "Own";
   const accessibleEmployees = filterEmployeesByRole(employees, activeRole);
-  const accessibleAttendance = isEmployee ? attendance.filter((a) => a.employeeId === EMPLOYEE_PERSONA_ID || a.employeeId === "EMP-005") : activeRole === "Department Manager" ? attendance.filter((a) => {
+  const accessibleAttendance = isEmployee ? attendance.filter((a) => a.employeeId === EMPLOYEE_PERSONA_ID) : activeRole === "Department Manager" ? attendance.filter((a) => {
     const emp = employees.find((e) => e.id === a.employeeId);
     return emp?.department === MANAGER_DEPARTMENT;
   }) : attendance;
@@ -174,7 +174,7 @@ const Attendance = () => {
                     style: {
                       padding: "8px",
                       fontSize: "12px",
-                      boxShadow: clockMethod === "GPS" ? "0 0 12px rgba(99, 102, 241, 0.4)" : "none"
+                      boxShadow: clockMethod === "GPS" ? "0 0 12px rgba(0, 143, 131, 0.4)" : "none"
                     },
                     onClick: () => handleSelectScanMethod("GPS"),
                     children: [
@@ -221,7 +221,7 @@ const Attendance = () => {
             }, children: [
               /* @__PURE__ */ jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center" }, children: [
                 /* @__PURE__ */ jsxs("label", { style: { fontSize: "12px", fontWeight: 700, margin: 0, display: "flex", alignItems: "center", gap: "6px" }, children: [
-                  /* @__PURE__ */ jsx(MapPin, { size: 14, style: { color: "#06b6d4" } }),
+                  /* @__PURE__ */ jsx(MapPin, { size: 14, style: { color: "#009688" } }),
                   "GPS Geo-Fence & Camera"
                 ] }),
                 /* @__PURE__ */ jsx("span", { className: "badge badge-success", style: { fontSize: "10px", padding: "2px 6px" }, children: "Active Zone" })
@@ -291,12 +291,12 @@ const Attendance = () => {
                       padding: "9px 12px",
                       fontSize: "12px",
                       fontWeight: 700,
-                      background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)",
+                      background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "8px",
-                      boxShadow: "0 4px 12px rgba(6, 182, 212, 0.25)"
+                      boxShadow: "0 4px 12px rgba(0, 150, 136, 0.25)"
                     },
                     onClick: () => setIsCameraModalOpen(true),
                     children: [
@@ -434,7 +434,7 @@ const Attendance = () => {
                   borderRadius: "6px",
                   border: "1px solid var(--border-color-solid)"
                 }, children: [
-                  log.method?.includes("GPS") ? /* @__PURE__ */ jsx(MapPin, { size: 11, style: { color: "#06b6d4" } }) : log.method?.includes("RFID") ? /* @__PURE__ */ jsx(KeyRound, { size: 11, style: { color: "#f59e0b" } }) : log.method?.includes("QR") ? /* @__PURE__ */ jsx(ScanLine, { size: 11, style: { color: "#8b5cf6" } }) : /* @__PURE__ */ jsx(Fingerprint, { size: 11, style: { color: "#10b981" } }),
+                  log.method?.includes("GPS") ? /* @__PURE__ */ jsx(MapPin, { size: 11, style: { color: "#009688" } }) : log.method?.includes("RFID") ? /* @__PURE__ */ jsx(KeyRound, { size: 11, style: { color: "#f59e0b" } }) : log.method?.includes("QR") ? /* @__PURE__ */ jsx(ScanLine, { size: 11, style: { color: "#8b5cf6" } }) : /* @__PURE__ */ jsx(Fingerprint, { size: 11, style: { color: "#10b981" } }),
                   log.method || "Biometric"
                 ] }),
                 log.photo ? /* @__PURE__ */ jsxs(

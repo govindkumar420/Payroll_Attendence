@@ -109,7 +109,7 @@ const ChangeProfilePhotoModal = ({
           justifyContent: "space-between",
           alignItems: "center",
           padding: "16px 20px",
-          background: "linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(6, 182, 212, 0.12) 100%)",
+          background: "linear-gradient(135deg, rgba(0, 143, 131, 0.12) 0%, rgba(0, 150, 136, 0.12) 100%)",
           borderBottom: "1px solid var(--border-color-solid)"
         }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
@@ -154,7 +154,7 @@ const ChangeProfilePhotoModal = ({
               borderRadius: "50%",
               overflow: "hidden",
               border: "3px solid var(--primary)",
-              boxShadow: "0 0 20px rgba(99, 102, 241, 0.3)",
+              boxShadow: "0 0 20px rgba(0, 143, 131, 0.3)",
               position: "relative",
               background: "#090d16"
             }, children: isCameraActive ? /* @__PURE__ */ jsx(
@@ -248,7 +248,7 @@ const ChangeProfilePhotoModal = ({
                   overflow: "hidden",
                   cursor: "pointer",
                   border: selectedPhoto === avatar ? "2px solid var(--primary)" : "2px solid transparent",
-                  boxShadow: selectedPhoto === avatar ? "0 0 10px rgba(99, 102, 241, 0.4)" : "none",
+                  boxShadow: selectedPhoto === avatar ? "0 0 10px rgba(0, 143, 131, 0.4)" : "none",
                   transform: selectedPhoto === avatar ? "scale(1.05)" : "scale(1)",
                   transition: "all 0.2s ease",
                   aspectRatio: "1/1"

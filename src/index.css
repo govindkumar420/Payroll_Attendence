@@ -15,12 +15,12 @@
   --text-secondary: #475569;
   --text-muted: #94a3b8;
   
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-light: rgba(99, 102, 241, 0.1);
+  --primary: #008f83;
+  --primary-hover: #00796f;
+  --primary-light: rgba(0, 143, 131, 0.1);
   
-  --accent: #06b6d4;
-  --accent-light: rgba(6, 182, 212, 0.1);
+  --accent: #009688;
+  --accent-light: rgba(0, 150, 136, 0.1);
   
   --success: #10b981;
   --success-light: rgba(16, 185, 129, 0.1);
@@ -41,8 +41,8 @@
   /* Custom Scrollbar Tokens */
   --scrollbar-track: rgba(0, 0, 0, 0.04);
   --scrollbar-thumb: rgba(100, 116, 139, 0.35);
-  --scrollbar-thumb-hover: #6366f1;
-  --scrollbar-thumb-active: #4f46e5;
+  --scrollbar-thumb-hover: #008f83;
+  --scrollbar-thumb-active: #00796f;
 }
 
 [data-theme='dark'] {
@@ -58,12 +58,12 @@
   --text-secondary: #cbd5e1;
   --text-muted: #64748b;
   
-  --primary: #818cf8;
-  --primary-hover: #6366f1;
-  --primary-light: rgba(129, 140, 248, 0.15);
+  --primary: #14b8a6;
+  --primary-hover: #0d9488;
+  --primary-light: rgba(20, 184, 166, 0.15);
   
-  --accent: #22d3ee;
-  --accent-light: rgba(34, 211, 238, 0.15);
+  --accent: #2dd4bf;
+  --accent-light: rgba(45, 212, 191, 0.15);
   
   --success: #34d399;
   --success-light: rgba(52, 211, 153, 0.15);
@@ -84,8 +84,8 @@
   /* Custom Scrollbar Tokens (Dark) */
   --scrollbar-track: rgba(255, 255, 255, 0.02);
   --scrollbar-thumb: rgba(148, 163, 184, 0.28);
-  --scrollbar-thumb-hover: #818cf8;
-  --scrollbar-thumb-active: #6366f1;
+  --scrollbar-thumb-hover: #2dd4bf;
+  --scrollbar-thumb-active: #14b8a6;
 }
 
 * {
@@ -168,7 +168,7 @@ body {
 .glass-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(0, 143, 131, 0.2);
 }
 
 /* Dashboard App Layout */
@@ -279,7 +279,7 @@ input:focus, select:focus, textarea:focus {
 
 .btn-primary:hover {
   background-color: var(--primary-hover);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 143, 131, 0.3);
   transform: translateY(-1px);
 }
 
@@ -420,7 +420,7 @@ tr:hover td {
 }
 
 /* ==========================================
-   AUTHENTIC SALARY SLIP STYLING (RIDDHI SIDDHI FORMAT)
+   AUTHENTIC SALARY SLIP STYLING
    ========================================== */
 .salary-slip-modal-wrapper {
   background: #ffffff;
@@ -711,4 +711,3 @@ tr:hover td {
     gap: 16px;
   }
 }
-

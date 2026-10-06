@@ -16,7 +16,7 @@ const Payroll = () => {
     disburseMonthlyPayroll
   } = useAppState();
   const permissions = getPermissions(activeRole);
-  const [selectedMonth, setSelectedMonth] = useState("2024-06");
+  const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
   const [activePayslip, setActivePayslip] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("All");
@@ -24,7 +24,7 @@ const Payroll = () => {
   const canApprove = permissions.payrollApproval;
   const canDisburse = permissions.bankTransfer;
   const isEmployee = activeRole === "Employee";
-  const availableLocations = Array.from(new Set(employees.map((e) => e.location || "Cold Jamnagar"))).filter(Boolean);
+  const availableLocations = Array.from(new Set(employees.map((e) => e.location).filter(Boolean)));
   const handleProcess = () => {
     if (!canProcess) return;
     processMonthlyPayroll(selectedMonth);
@@ -48,10 +48,12 @@ const Payroll = () => {
     return employees.find((e) => e.id === id);
   };
   const handleOpenSampleSlip = () => {
-    const targetId = isEmployee ? EMPLOYEE_PERSONA_ID : "200050";
-    const sampleRecord = payroll.find((p) => p.employeeId === targetId && p.month === selectedMonth) || payroll.find((p) => p.employeeId === targetId) || payroll[0];
+    const availablePayroll = isEmployee ? payroll.filter((p) => p.employeeId === EMPLOYEE_PERSONA_ID) : payroll;
+    const sampleRecord = availablePayroll.find((p) => p.month === selectedMonth) || availablePayroll[0];
     if (sampleRecord) {
       setActivePayslip(sampleRecord);
+    } else {
+      alert("No payroll record is available for this account.");
     }
   };
   const activePayrollRun = payroll.filter((p) => {
@@ -59,7 +61,7 @@ const Payroll = () => {
     const emp = getEmployee(p.employeeId);
     const matchesSearch = p.employeeId.toLowerCase().includes(searchTerm.toLowerCase()) || getEmployeeName(p.employeeId).toLowerCase().includes(searchTerm.toLowerCase()) || emp?.location && emp.location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesLocation = locationFilter === "All" || emp?.location === locationFilter;
-    const matchesRoleScope = !isEmployee || p.employeeId === EMPLOYEE_PERSONA_ID || p.employeeId === "EMP-005";
+    const matchesRoleScope = !isEmployee || p.employeeId === EMPLOYEE_PERSONA_ID;
     return matchesMonth && matchesSearch && matchesLocation && matchesRoleScope;
   });
   const totalRunForMonth = payroll.filter((p) => p.month === selectedMonth);
@@ -76,11 +78,12 @@ const Payroll = () => {
         "button",
         {
           className: "btn btn-primary",
-          style: { background: "linear-gradient(135deg, #2b7a9e 0%, #1b5a7a 100%)", boxShadow: "0 4px 14px rgba(27, 90, 122, 0.35)", gap: "8px" },
+          style: { background: "linear-gradient(135deg, #008f83 0%, #00695f 100%)", boxShadow: "0 4px 14px rgba(0, 105, 95, 0.35)", gap: "8px" },
           onClick: handleOpenSampleSlip,
+          disabled: isEmployee ? !payroll.some((p) => p.employeeId === EMPLOYEE_PERSONA_ID) : !payroll.length,
           children: [
             /* @__PURE__ */ jsx(Printer, { size: 16 }),
-            " Print Sample Salary Slip (Riddhi Siddhi Enterprises)"
+            " Print Salary Slip"
           ]
         }
       )
@@ -90,28 +93,6 @@ const Payroll = () => {
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("h3", { style: { fontSize: "15px", fontWeight: 800, marginBottom: "8px" }, children: "Payroll Processing" }),
           /* @__PURE__ */ jsx("label", { style: { fontSize: "12px", fontWeight: 600, display: "block", marginBottom: "6px" }, children: "Select Target Month" }),
-          /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: "6px", marginBottom: "8px" }, children: [
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                type: "button",
-                className: `btn ${selectedMonth === "2024-06" ? "btn-primary" : "btn-outline"}`,
-                style: { fontSize: "11px", padding: "4px 10px" },
-                onClick: () => setSelectedMonth("2024-06"),
-                children: "Jun-2024 (PDF Data)"
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                type: "button",
-                className: `btn ${selectedMonth === "2026-08" ? "btn-primary" : "btn-outline"}`,
-                style: { fontSize: "11px", padding: "4px 10px" },
-                onClick: () => setSelectedMonth("2026-08"),
-                children: "Aug-2026 (Live)"
-              }
-            )
-          ] }),
           /* @__PURE__ */ jsx("input", { type: "month", value: selectedMonth, onChange: (e) => setSelectedMonth(e.target.value) })
         ] }),
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }, children: [
@@ -236,7 +217,7 @@ const Payroll = () => {
             "input",
             {
               type: "text",
-              placeholder: "Search by Code (e.g. 200050) or Name...",
+              placeholder: "Search by employee code or name...",
               value: searchTerm,
               onChange: (e) => setSearchTerm(e.target.value),
               style: { width: "240px", padding: "6px 12px", fontSize: "13px" }
@@ -278,7 +259,7 @@ const Payroll = () => {
                 pay.employeeId
               ] })
             ] }),
-            /* @__PURE__ */ jsx("td", { style: { fontSize: "12px" }, children: emp?.location || "Pune Head Office" }),
+            /* @__PURE__ */ jsx("td", { style: { fontSize: "12px" }, children: emp?.location || "Not set" }),
             /* @__PURE__ */ jsxs("td", { style: { fontSize: "12px" }, children: [
               "P: ",
               /* @__PURE__ */ jsx("strong", { children: pay.presentDays }),
@@ -308,7 +289,7 @@ const Payroll = () => {
               "button",
               {
                 className: "btn btn-primary",
-                style: { padding: "6px 14px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", color: "#ffffff", fontWeight: 600, boxShadow: "0 2px 8px rgba(6, 182, 212, 0.3)" },
+                style: { padding: "6px 14px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff", fontWeight: 600, boxShadow: "0 2px 8px rgba(0, 150, 136, 0.3)" },
                 onClick: () => setActivePayslip(pay),
                 title: "Open & Print Salary Slip",
                 children: [
@@ -340,8 +321,8 @@ const Payroll = () => {
           gender: "Male",
           department: "Operations",
           designation: "Floor Associate",
-          joiningDate: "2023-07-17",
-          location: "Cold Jamnagar",
+          joiningDate: "",
+          location: "",
           employmentType: "Full-Time",
           shiftId: "S1",
           manager: "",
@@ -359,8 +340,8 @@ const Payroll = () => {
             overtimeRate: 150
           },
           bankDetails: { bankName: "Bank", accountNumber: "", ifscCode: "" },
-          pfNumber: "101974247470",
-          uanNumber: "101974247470",
+          pfNumber: "",
+          uanNumber: "",
           esiNumber: "",
           panNumber: "",
           aadhaarNumber: "",

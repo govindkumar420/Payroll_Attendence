@@ -36,7 +36,7 @@ import {
   ChevronDown
 } from "lucide-react";
 const App = () => {
-  const { theme, setTheme, activeRole, setActiveRole, notifications, personaPhotos, isLoggedIn, logout } = useAppState();
+  const { theme, setTheme, activeRole, isAdministratorSession, setActiveRole, notifications, personaPhotos, isLoggedIn, logout } = useAppState();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(typeof window !== "undefined" ? window.innerWidth > 768 : true);
   const [credentialsModalOpen, setCredentialsModalOpen] = useState(false);
@@ -61,17 +61,17 @@ const App = () => {
   const getPersonaName = () => {
     switch (activeRole) {
       case "Super Admin":
-        return "Shejal (Admin)";
+        return "Administrator";
       case "HR Manager":
-        return "Hiralben (HR)";
+        return "HR Manager";
       case "Payroll Manager":
-        return "Parth (Pay)";
+        return "Payroll Manager";
       case "Department Manager":
-        return "Manas (Mgr)";
+        return "Department Manager";
       case "Employee":
-        return "Vaghela Pushprajsinh (EMP-200050)";
+        return "Employee User (EMP-000001)";
       case "Accountant":
-        return "Finance Desk (Fin)";
+        return "Accountant";
       default:
         return "User Session";
     }
@@ -82,19 +82,19 @@ const App = () => {
   const getPersonaEmail = () => {
     switch (activeRole) {
       case "Super Admin":
-        return "admin@riddhisiddhi.com";
+        return "admin@gnosisventures.com";
       case "HR Manager":
-        return "hr@riddhisiddhi.com";
+        return "hr@gnosisventures.com";
       case "Payroll Manager":
-        return "payroll@riddhisiddhi.com";
+        return "payroll@gnosisventures.com";
       case "Department Manager":
-        return "manager@riddhisiddhi.com";
+        return "manager@gnosisventures.com";
       case "Employee":
-        return "pushpraj.vaghela@riddhisiddhi.com";
+        return "employee@gnosisventures.com";
       case "Accountant":
-        return "accountant@riddhisiddhi.com";
+        return "accountant@gnosisventures.com";
       default:
-        return "user@riddhisiddhi.com";
+        return "user@gnosisventures.com";
     }
   };
   if (!isLoggedIn) {
@@ -241,11 +241,11 @@ const App = () => {
           /* @__PURE__ */ jsx("h1", { style: { fontSize: "18px", fontWeight: 800 }, children: allNavItems.find((n) => n.id === activeTab)?.label }),
           /* @__PURE__ */ jsxs("div", { className: "badge badge-primary", style: { fontSize: "11px", fontWeight: 700, padding: "4px 10px", gap: "6px", background: "var(--primary-glow)", border: "1px solid var(--primary)" }, children: [
             /* @__PURE__ */ jsx(CompanyLogo, { size: "xs" }),
-            /* @__PURE__ */ jsx("span", { children: "RIDDHI SIDDHI ENTERPRISES" })
+            /* @__PURE__ */ jsx("span", { children: "Gnosis Ventures" })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "20px" }, children: [
-          /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+          isAdministratorSession && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
             /* @__PURE__ */ jsx("span", { style: { fontSize: "11px", fontWeight: 700, textTransform: "uppercase", color: "var(--text-muted)" }, children: "Role Switcher:" }),
             /* @__PURE__ */ jsxs(
               "select",
@@ -264,7 +264,7 @@ const App = () => {
               }
             )
           ] }),
-          /* @__PURE__ */ jsxs(
+          isAdministratorSession && /* @__PURE__ */ jsxs(
             "button",
             {
               className: "btn btn-outline",
@@ -272,7 +272,7 @@ const App = () => {
               style: { fontSize: "11px", padding: "6px 12px", gap: "6px", borderRadius: "8px", fontWeight: 700 },
               title: "View User IDs & Passwords for all roles",
               children: [
-                /* @__PURE__ */ jsx(KeyRound, { size: 14, style: { color: "#06b6d4" } }),
+                /* @__PURE__ */ jsx(KeyRound, { size: 14, style: { color: "#009688" } }),
                 /* @__PURE__ */ jsx("span", { children: "IDs & Passwords" })
               ]
             }
@@ -334,6 +334,7 @@ const App = () => {
               onChangePhotoClick: () => setChangePhotoModalOpen(true),
               onForgotPasswordClick: () => setForgotPasswordModalOpen(true),
               onViewCredentialsClick: () => setCredentialsModalOpen(true),
+              isAdministratorSession,
               onLogoutClick: logout
             }
           )
@@ -361,7 +362,7 @@ const App = () => {
         userEmail: getPersonaEmail()
       }
     ),
-    /* @__PURE__ */ jsx(
+    isAdministratorSession && /* @__PURE__ */ jsx(
       RoleCredentialsModal,
       {
         isOpen: credentialsModalOpen,

@@ -62,7 +62,7 @@ const Leaves = () => {
     return true;
   });
   const hrQueue = leaves.filter((l) => l.status === "Approved by Manager");
-  const allHistory = isEmployee ? leaves.filter((l) => l.employeeId === EMPLOYEE_PERSONA_ID || l.employeeId === "EMP-005") : isDeptManager ? leaves.filter((l) => {
+  const allHistory = isEmployee ? leaves.filter((l) => l.employeeId === EMPLOYEE_PERSONA_ID) : isDeptManager ? leaves.filter((l) => {
     const emp = employees.find((e) => e.id === l.employeeId);
     return emp?.department === MANAGER_DEPARTMENT;
   }) : leaves;

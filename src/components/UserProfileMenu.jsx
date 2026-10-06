@@ -11,6 +11,7 @@ const UserProfileMenu = ({
   onChangePhotoClick,
   onForgotPasswordClick,
   onViewCredentialsClick,
+  isAdministratorSession,
   onLogoutClick
 }) => {
   const menuRef = useRef(null);
@@ -52,7 +53,7 @@ const UserProfileMenu = ({
       children: [
         /* @__PURE__ */ jsxs("div", { style: {
           padding: "12px 14px",
-          background: "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%)",
+          background: "linear-gradient(135deg, rgba(0, 143, 131, 0.1) 0%, rgba(0, 150, 136, 0.1) 100%)",
           borderRadius: "12px",
           display: "flex",
           alignItems: "center",
@@ -66,7 +67,7 @@ const UserProfileMenu = ({
             overflow: "hidden",
             border: "2px solid var(--primary)",
             flexShrink: 0,
-            boxShadow: "0 0 10px rgba(99, 102, 241, 0.3)"
+            boxShadow: "0 0 10px rgba(0, 143, 131, 0.3)"
           }, children: /* @__PURE__ */ jsx("img", { src: photoUrl, alt: "User Avatar", style: { width: "100%", height: "100%", objectFit: "cover" } }) }),
           /* @__PURE__ */ jsxs("div", { style: { overflow: "hidden" }, children: [
             /* @__PURE__ */ jsx("strong", { style: { fontSize: "14px", color: "var(--text-primary)", display: "block", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }, children: personaName }),
@@ -97,14 +98,14 @@ const UserProfileMenu = ({
               },
               children: [
                 /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
-                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(6, 182, 212, 0.1)", color: "#06b6d4" }, children: /* @__PURE__ */ jsx(Camera, { size: 16 }) }),
+                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(0, 150, 136, 0.1)", color: "#009688" }, children: /* @__PURE__ */ jsx(Camera, { size: 16 }) }),
                   /* @__PURE__ */ jsx("span", { children: "Change Profile Picture" })
                 ] }),
                 /* @__PURE__ */ jsx(ChevronRight, { size: 16, style: { color: "var(--text-muted)" } })
               ]
             }
           ),
-          /* @__PURE__ */ jsxs(
+          isAdministratorSession && /* @__PURE__ */ jsxs(
             "button",
             {
               className: "btn btn-outline",
@@ -126,14 +127,14 @@ const UserProfileMenu = ({
               },
               children: [
                 /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
-                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(99, 102, 241, 0.1)", color: "var(--primary)" }, children: /* @__PURE__ */ jsx(KeyRound, { size: 16 }) }),
+                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(0, 143, 131, 0.1)", color: "var(--primary)" }, children: /* @__PURE__ */ jsx(KeyRound, { size: 16 }) }),
                   /* @__PURE__ */ jsx("span", { children: "Forgot / Change Password" })
                 ] }),
                 /* @__PURE__ */ jsx(ChevronRight, { size: 16, style: { color: "var(--text-muted)" } })
               ]
             }
           ),
-          /* @__PURE__ */ jsxs(
+          isAdministratorSession && /* @__PURE__ */ jsxs(
             "button",
             {
               className: "btn btn-outline",

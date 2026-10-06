@@ -42,7 +42,7 @@ const Employees = () => {
   const permissions = getPermissions(activeRole);
   const canModify = permissions.employeeManagement === "Full";
   const canViewSalary = permissions.salaryStructure !== "None";
-  const canPrintSlipFor = (targetEmpId) => permissions.payslip === "All" || permissions.payslip === "View" || permissions.payslip === "Own" && (targetEmpId === EMPLOYEE_PERSONA_ID || targetEmpId === "EMP-005");
+  const canPrintSlipFor = (targetEmpId) => permissions.payslip === "All" || permissions.payslip === "View" || permissions.payslip === "Own" && targetEmpId === EMPLOYEE_PERSONA_ID;
   const [searchTerm, setSearchTerm] = useState("");
   const [deptFilter, setDeptFilter] = useState("All");
   const [locationFilter, setLocationFilter] = useState("All");
@@ -52,7 +52,7 @@ const Employees = () => {
   const [viewDetailsEmp, setViewDetailsEmp] = useState(null);
   const [activeSlip, setActiveSlip] = useState(null);
   const accessibleEmployees = filterEmployeesByRole(employees, activeRole);
-  const availableLocations = Array.from(new Set(accessibleEmployees.map((e) => e.location || "Cold Jamnagar"))).filter(Boolean);
+  const availableLocations = Array.from(new Set(accessibleEmployees.map((e) => e.location).filter(Boolean)));
   const availableDepartments = Array.from(new Set(accessibleEmployees.map((e) => e.department))).filter(Boolean);
   const filteredEmployees = accessibleEmployees.filter((emp) => {
     const term = searchTerm.toLowerCase();
@@ -81,77 +81,41 @@ const Employees = () => {
   };
   const handlePrintSlip = (emp) => {
     const existing = payroll.find((p) => p.employeeId === emp.id);
-    const mockRecord = existing || {
-      id: `PAY-${emp.id}-2024-06`,
-      employeeId: emp.id,
-      month: "2024-06",
-      totalDays: 30,
-      presentDays: 30,
-      absentDays: 0,
-      leaveDays: 0,
-      overtimeHours: 10,
-      earnings: {
-        basic: emp.salaryStructure.basic,
-        hra: emp.salaryStructure.hra,
-        da: emp.salaryStructure.da || 0,
-        conveyance: emp.salaryStructure.conveyance || 0,
-        medical: emp.salaryStructure.medical || 0,
-        specialAllowance: emp.salaryStructure.specialAllowance || 0,
-        otherAllowance: emp.salaryStructure.otherAllowance || 0,
-        leaveEncashment: emp.salaryStructure.leaveEncashment || 662,
-        bonus: emp.salaryStructure.bonus || 955,
-        incentive: emp.salaryStructure.incentive || 0,
-        overtime: (emp.salaryStructure.overtimeRate || 150) * 10,
-        grossSalary: emp.salaryStructure.basic + emp.salaryStructure.hra + (emp.salaryStructure.otherAllowance || 0) + (emp.salaryStructure.leaveEncashment || 662) + (emp.salaryStructure.bonus || 955) + (emp.salaryStructure.overtimeRate || 150) * 10
-      },
-      deductions: {
-        pf: Math.round(emp.salaryStructure.basic * 0.12),
-        esi: 0,
-        pt: 200,
-        tds: 0,
-        advance: 0,
-        loanEmi: 0,
-        latePenalty: 0,
-        leaveDeduction: 0,
-        lwf: 1,
-        otherDeduction: 0,
-        totalDeductions: Math.round(emp.salaryStructure.basic * 0.12) + 200 + 1
-      },
-      netSalary: emp.salaryStructure.basic + emp.salaryStructure.hra + (emp.salaryStructure.otherAllowance || 0) + (emp.salaryStructure.leaveEncashment || 662) + (emp.salaryStructure.bonus || 955) + (emp.salaryStructure.overtimeRate || 150) * 10 - (Math.round(emp.salaryStructure.basic * 0.12) + 200 + 1),
-      paymentMode: "BY BANK",
-      status: "Approved"
-    };
-    setActiveSlip({ record: mockRecord, employee: emp });
+    if (!existing) {
+      alert("No payroll record is available for this employee.");
+      return;
+    }
+    setActiveSlip({ record: existing, employee: emp });
   };
   const [empCode, setEmpCode] = useState("");
   const [name, setName] = useState("");
   const [photoUrl] = useState("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150");
   const [mobileNumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018");
-  const [location, setLocation] = useState("Cold Jamnagar");
-  const [dob, setDob] = useState("1995-01-01");
-  const [gender, setGender] = useState("Male");
+  const [address, setAddress] = useState("");
+  const [location, setLocation] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
   const [department, setDepartment] = useState("Operations");
-  const [designation, setDesignation] = useState("Floor Associate");
-  const [joiningDate, setJoiningDate] = useState("2024-06-01");
+  const [designation, setDesignation] = useState("");
+  const [joiningDate, setJoiningDate] = useState("");
   const [employmentType, setEmploymentType] = useState("Full-Time");
   const [shiftId, setShiftId] = useState("S1");
-  const [manager, setManager] = useState("Sarah Connor");
-  const [basic, setBasic] = useState(11166);
+  const [manager, setManager] = useState("");
+  const [basic, setBasic] = useState(0);
   const [hra, setHra] = useState(0);
   const [da, setDa] = useState(0);
   const [conveyance, setConveyance] = useState(0);
   const [medical, setMedical] = useState(0);
   const [specialAllowance, setSpecialAllowance] = useState(0);
   const [otherAllowance, setOtherAllowance] = useState(0);
-  const [leaveEncashment, setLeaveEncashment] = useState(662);
-  const [bonus, setBonus] = useState(955);
+  const [leaveEncashment, setLeaveEncashment] = useState(0);
+  const [bonus, setBonus] = useState(0);
   const [incentive, setIncentive] = useState(0);
-  const [overtimeRate, setOvertimeRate] = useState(150);
-  const [bankName, setBankName] = useState("State Bank of India");
+  const [overtimeRate, setOvertimeRate] = useState(0);
+  const [bankName, setBankName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
-  const [ifscCode, setIfscCode] = useState("SBIN0001234");
+  const [ifscCode, setIfscCode] = useState("");
   const [pfNumber, setPfNumber] = useState("");
   const [uanNumber, setUanNumber] = useState("");
   const [esiNumber, setEsiNumber] = useState("");
@@ -198,7 +162,7 @@ const Employees = () => {
       `"${emp.name}"`,
       `"${emp.designation}"`,
       `"${emp.department}"`,
-      `"${emp.location || "Cold Jamnagar"}"`,
+      `"${emp.location || ""}"`,
       `"${emp.employmentType}"`,
       `"${emp.joiningDate}"`,
       emp.salaryStructure.basic,
@@ -223,7 +187,7 @@ const Employees = () => {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Riddhi_Siddhi_Employees_${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv`);
+    link.setAttribute("download", `Gnosis_Ventures_Employees_${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -236,7 +200,7 @@ const Employees = () => {
       name,
       photoUrl,
       mobileNumber,
-      email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, ".")}@riddhisiddhi.com`,
+      email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, ".")}@gnosisventures.com`,
       address,
       location,
       dob,
@@ -296,7 +260,7 @@ const Employees = () => {
             " Active Employees"
           ] })
         ] }),
-        /* @__PURE__ */ jsx("p", { style: { color: "var(--text-secondary)", fontSize: "13px", marginTop: "2px" }, children: "Manage Riddhi Siddhi Enterprises roster, salary structures, statutory accounts, and locations in rows and tables." })
+        /* @__PURE__ */ jsx("p", { style: { color: "var(--text-secondary)", fontSize: "13px", marginTop: "2px" }, children: "Manage Gnosis Ventures roster, salary structures, statutory accounts, and locations in rows and tables." })
       ] }),
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }, children: [
         /* @__PURE__ */ jsxs(
@@ -331,7 +295,7 @@ const Employees = () => {
             "input",
             {
               type: "text",
-              placeholder: "Search by Code (e.g. 200050), Name, Location, UAN, Phone...",
+              placeholder: "Search by employee code, name, location, UAN, or phone...",
               value: searchTerm,
               onChange: (e) => setSearchTerm(e.target.value),
               style: { paddingLeft: "40px", fontSize: "13px" }
@@ -549,7 +513,7 @@ const Employees = () => {
                     /* @__PURE__ */ jsx("td", { children: /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: "2px" }, children: [
                       /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: 600 }, children: [
                         /* @__PURE__ */ jsx(MapPin, { size: 12, style: { color: "var(--primary)", flexShrink: 0 } }),
-                        /* @__PURE__ */ jsx("span", { children: emp.location || "Cold Jamnagar" })
+                        /* @__PURE__ */ jsx("span", { children: emp.location || "Not set" })
                       ] }),
                       /* @__PURE__ */ jsx("span", { style: { fontSize: "11px", color: "var(--text-muted)" }, children: emp.department })
                     ] }) }),
@@ -621,7 +585,7 @@ const Employees = () => {
                             padding: "5px 9px",
                             fontSize: "11px",
                             gap: "4px",
-                            background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)",
+                            background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)",
                             color: "#ffffff",
                             fontWeight: 600
                           },
@@ -729,7 +693,7 @@ const Employees = () => {
                     /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: "6px", fontSize: "11px" }, children: [
                       /* @__PURE__ */ jsxs("div", { children: [
                         /* @__PURE__ */ jsx("span", { style: { color: "var(--text-muted)" }, children: "Branch Location: " }),
-                        /* @__PURE__ */ jsx("strong", { style: { color: "var(--text-primary)" }, children: emp.location || "Cold Jamnagar" })
+                        /* @__PURE__ */ jsx("strong", { style: { color: "var(--text-primary)" }, children: emp.location || "Not set" })
                       ] }),
                       /* @__PURE__ */ jsxs("div", { children: [
                         /* @__PURE__ */ jsx("span", { style: { color: "var(--text-muted)" }, children: "Department: " }),
@@ -897,7 +861,7 @@ const Employees = () => {
         /* @__PURE__ */ jsxs("div", { style: { borderTop: "1px solid var(--border-color)", paddingTop: "12px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "12px" }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: "8px", alignItems: "center", color: "var(--text-secondary)" }, children: [
             /* @__PURE__ */ jsx(MapPin, { size: 14, style: { color: "var(--primary)", flexShrink: 0 } }),
-            /* @__PURE__ */ jsx("span", { style: { fontWeight: 600 }, children: emp.location || "Cold Jamnagar" })
+            /* @__PURE__ */ jsx("span", { style: { fontWeight: 600 }, children: emp.location || "Not set" })
           ] }),
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: "8px", alignItems: "center", color: "var(--text-secondary)" }, children: [
             /* @__PURE__ */ jsx(Calendar, { size: 14, style: { color: "var(--text-muted)", flexShrink: 0 } }),
@@ -920,7 +884,7 @@ const Employees = () => {
             "button",
             {
               className: "btn btn-primary",
-              style: { padding: "8px 12px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", color: "#ffffff", fontWeight: 600 },
+              style: { padding: "8px 12px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff", fontWeight: 600 },
               onClick: () => handlePrintSlip(emp),
               title: "Print Salary Slip",
               children: [
@@ -1027,7 +991,7 @@ const Employees = () => {
           /* @__PURE__ */ jsxs("div", { className: "grid-2", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("label", { style: { fontSize: "12px", fontWeight: 600, display: "block", marginBottom: "6px" }, children: "Full Name *" }),
-              /* @__PURE__ */ jsx("input", { type: "text", required: true, value: name, onChange: (e) => setName(e.target.value), placeholder: "Sarah Connor" })
+              /* @__PURE__ */ jsx("input", { type: "text", required: true, value: name, onChange: (e) => setName(e.target.value), placeholder: "Enter employee name" })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("label", { style: { fontSize: "12px", fontWeight: 600, display: "block", marginBottom: "6px" }, children: "Email Address *" }),
@@ -1055,12 +1019,12 @@ const Employees = () => {
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("label", { style: { fontSize: "12px", fontWeight: 600, display: "block", marginBottom: "6px" }, children: "Work Location / Branch" }),
-              /* @__PURE__ */ jsx("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), placeholder: "Cold Jamnagar, Pune, etc." })
+              /* @__PURE__ */ jsx("input", { type: "text", value: location, onChange: (e) => setLocation(e.target.value), placeholder: "Enter work location or branch" })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("label", { style: { fontSize: "12px", fontWeight: 600, display: "block", marginBottom: "6px" }, children: "Home Address" }),
-            /* @__PURE__ */ jsx("input", { type: "text", value: address, onChange: (e) => setAddress(e.target.value), placeholder: "G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018" })
+            /* @__PURE__ */ jsx("input", { type: "text", value: address, onChange: (e) => setAddress(e.target.value), placeholder: "Enter home address" })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: "12px" }, children: [
@@ -1257,7 +1221,7 @@ const Employees = () => {
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("span", { style: { fontSize: "10px", color: "var(--text-muted)", display: "block" }, children: "Location" }),
-              /* @__PURE__ */ jsx("span", { style: { fontSize: "12px", fontWeight: 600 }, children: viewDetailsEmp.location || "Cold Jamnagar" })
+              /* @__PURE__ */ jsx("span", { style: { fontSize: "12px", fontWeight: 600 }, children: viewDetailsEmp.location || "Not set" })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("span", { style: { fontSize: "10px", color: "var(--text-muted)", display: "block" }, children: "Shift Schedule" }),
@@ -1363,7 +1327,7 @@ const Employees = () => {
             "button",
             {
               className: "btn btn-primary",
-              style: { fontSize: "12px", padding: "8px 16px", gap: "6px", background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", color: "#ffffff", fontWeight: 600 },
+              style: { fontSize: "12px", padding: "8px 16px", gap: "6px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff", fontWeight: 600 },
               onClick: () => handlePrintSlip(viewDetailsEmp),
               children: [
                 /* @__PURE__ */ jsx(Printer, { size: 14 }),

@@ -9,7 +9,7 @@ const ForgotPasswordModal = ({
   personaName,
   userEmail
 }) => {
-  const { updateUserPassword, triggerSyncNotification } = useAppState();
+  const { isAdministratorSession, updateUserPassword, triggerSyncNotification } = useAppState();
   const [activeTab, setActiveTab] = useState("change");
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
@@ -20,7 +20,7 @@ const ForgotPasswordModal = ({
   const [showPassword, setShowPassword] = useState(false);
   const [successMsg, setSuccessMsg] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  if (!isOpen) return null;
+  if (!isOpen || !isAdministratorSession) return null;
   const handleChangePassword = (e) => {
     e.preventDefault();
     setErrorMsg(null);
@@ -36,7 +36,7 @@ const ForgotPasswordModal = ({
       setErrorMsg("Passwords do not match.");
       return;
     }
-    updateUserPassword(role, newPass);
+    if (!updateUserPassword(role, newPass)) return;
     setSuccessMsg("Password updated successfully!");
     setTimeout(() => {
       onClose();
@@ -66,7 +66,7 @@ const ForgotPasswordModal = ({
       setErrorMsg("Passwords do not match.");
       return;
     }
-    updateUserPassword(role, newPass);
+    if (!updateUserPassword(role, newPass)) return;
     setSuccessMsg("Password reset successfully via verified OTP!");
     setTimeout(() => {
       onClose();
@@ -99,7 +99,7 @@ const ForgotPasswordModal = ({
           justifyContent: "space-between",
           alignItems: "center",
           padding: "16px 20px",
-          background: "linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(6, 182, 212, 0.12) 100%)",
+          background: "linear-gradient(135deg, rgba(0, 143, 131, 0.12) 0%, rgba(0, 150, 136, 0.12) 100%)",
           borderBottom: "1px solid var(--border-color-solid)"
         }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
@@ -273,7 +273,7 @@ const ForgotPasswordModal = ({
                   type: "email",
                   value: resetEmail,
                   onChange: (e) => setResetEmail(e.target.value),
-                  placeholder: "user@riddhisiddhi.com",
+                  placeholder: "user@gnosisventures.com",
                   required: true
                 }
               ) })

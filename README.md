@@ -1,7 +1,7 @@
 
-# 🏢 Riddhi Siddhi Enterprises - Payroll & Attendance Portal
+# 🏢 Gnosis Ventures - Payroll & Attendance Portal
 
-A comprehensive, enterprise-grade Attendance and Payroll Management System built with **React**, **TypeScript**, **Vite**, and styled with custom glassmorphism dark/light mode.
+A comprehensive, enterprise-grade Attendance and Payroll Management System built with **React**, **JavaScript and JSX**, **Vite**, and styled with custom glassmorphism dark/light mode.
 
 🌐 **Live Demo on GitHub Pages**: [https://govindkumar420.github.io/Payroll_Attendence/](https://govindkumar420.github.io/Payroll_Attendence/)
 
@@ -10,12 +10,12 @@ A comprehensive, enterprise-grade Attendance and Payroll Management System built
 ## ✨ Features
 
 - 👥 **Multi-Role Access Control (RBAC)**:
-  - Super Admin (Shejal)
-  - HR Manager (Hiralben)
-  - Payroll Manager (Parth)
-  - Department Manager (Manas)
+  - Super Admin
+  - HR Manager
+  - Payroll Manager
+  - Department Manager
   - Accountant
-  - Employee Persona (Pushprajsinh Vaghela)
+  - Employee Persona
 - ⏱️ **Attendance Tracking & Terminal**: Live camera capture, biometric simulation, daily check-in/out, logs, geolocation.
 - 💰 **Automated Payroll Engine**: Salary computation, PF (12%), ESIC (0.75%), Professional Tax (PT), TDS deduction, overtime calculations.
 - 🧾 **Salary Slips**: Professional printable payslips with company branding.
@@ -29,12 +29,12 @@ A comprehensive, enterprise-grade Attendance and Payroll Management System built
 
 | Role | User ID / Email | Password |
 | :--- | :--- | :--- |
-| **Super Admin** | `admin@riddhisiddhi.com` | `Admin@2026` |
-| **HR Manager** | `hr@riddhisiddhi.com` | `Hr@2026` |
-| **Payroll Manager** | `payroll@riddhisiddhi.com` | `Payroll@2026` |
-| **Department Manager** | `manager@riddhisiddhi.com` | `Manager@2026` |
-| **Accountant** | `accountant@riddhisiddhi.com` | `Accountant@2026` |
-| **Employee** | `EMP-200050` / `pushpraj.vaghela@riddhisiddhi.com` | `Emp@2026` |
+| **Super Admin** | `admin@gnosisventures.com` | `Admin@2026` |
+| **HR Manager** | `hr@gnosisventures.com` | `Hr@2026#` |
+| **Payroll Manager** | `payroll@gnosisventures.com` | `Payroll@2026` |
+| **Department Manager** | `manager@gnosisventures.com` | `Manager@2026` |
+| **Accountant** | `accountant@gnosisventures.com` | `Accounts@2026` |
+| **Employee** | `EMP-000001` / `employee@gnosisventures.com` | `Emp@000001` |
 
 ---
 

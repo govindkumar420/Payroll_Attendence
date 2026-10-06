@@ -69,12 +69,10 @@ const Reports = () => {
     return emp ? `PAN: ${emp.panNumber} | Aadhaar: ${emp.aadhaarNumber}` : "-";
   };
   const handleExport = (type) => {
-    alert(`Report Exporter: Compiled and generated CSV file for ${type}_Report_August_2026.csv. Download starting...`);
+    alert(`Report Exporter: Compiled and generated CSV file for ${type}_Report_${new Date().toISOString().slice(0, 10)}.csv. Download starting...`);
   };
   const activePayrollRun = payroll.filter((p) => {
-    const matchesMonth = p.month === "2026-08" || p.month === "2024-06";
-    const matchesRole = !isEmployee || p.employeeId === EMPLOYEE_PERSONA_ID || p.employeeId === "EMP-005";
-    return matchesMonth && matchesRole;
+    return !isEmployee || p.employeeId === EMPLOYEE_PERSONA_ID;
   });
   return /* @__PURE__ */ jsxs("div", { className: "animate-fade-in", style: { display: "flex", flexDirection: "column", gap: "24px" }, children: [
     /* @__PURE__ */ jsx("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center" }, children: /* @__PURE__ */ jsxs("div", { children: [
@@ -185,7 +183,7 @@ const Reports = () => {
               "button",
               {
                 className: "btn btn-primary",
-                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", color: "#ffffff" },
+                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff" },
                 onClick: () => setActivePayslip(pay),
                 title: "Print Salary Slip",
                 children: [
@@ -239,7 +237,7 @@ const Reports = () => {
               "button",
               {
                 className: "btn btn-primary",
-                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", color: "#ffffff" },
+                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff" },
                 onClick: () => setActivePayslip(pay),
                 title: "Print Salary Slip",
                 children: [
@@ -275,7 +273,7 @@ const Reports = () => {
             "button",
             {
               className: "btn btn-primary",
-              style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)", color: "#ffffff" },
+              style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff" },
               onClick: () => setActivePayslip(pay),
               title: "Print Salary Slip",
               children: [
@@ -302,8 +300,8 @@ const Reports = () => {
           gender: "Male",
           department: "Operations",
           designation: "Floor Associate",
-          joiningDate: "2023-07-17",
-          location: "Cold Jamnagar",
+          joiningDate: "",
+          location: "",
           employmentType: "Full-Time",
           shiftId: "S1",
           manager: "",
@@ -321,8 +319,8 @@ const Reports = () => {
             overtimeRate: 150
           },
           bankDetails: { bankName: "Bank", accountNumber: "", ifscCode: "" },
-          pfNumber: "101974247470",
-          uanNumber: "101974247470",
+          pfNumber: "",
+          uanNumber: "",
           esiNumber: "",
           panNumber: "",
           aadhaarNumber: "",

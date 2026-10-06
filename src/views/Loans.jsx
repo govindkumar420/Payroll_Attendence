@@ -46,7 +46,7 @@ const Loans = () => {
     if (!canApprove) return;
     updateLoanStatus(id, "Rejected");
   };
-  const scopedLoans = isEmployee ? loans.filter((l) => l.employeeId === EMPLOYEE_PERSONA_ID || l.employeeId === "EMP-005") : loans;
+  const scopedLoans = isEmployee ? loans.filter((l) => l.employeeId === EMPLOYEE_PERSONA_ID) : loans;
   const activeLoans = scopedLoans.filter((l) => l.status === "Disbursed");
   const pendingLoans = scopedLoans.filter((l) => l.status === "Pending");
   return /* @__PURE__ */ jsxs("div", { className: "animate-fade-in", style: { display: "flex", flexDirection: "column", gap: "24px" }, children: [
