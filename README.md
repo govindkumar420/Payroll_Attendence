@@ -1,3 +1,4 @@
+
 # 🏢 Riddhi Siddhi Enterprises - Payroll & Attendance Portal
 
 A comprehensive, enterprise-grade Attendance and Payroll Management System built with **React**, **TypeScript**, **Vite**, and styled with custom glassmorphism dark/light mode.

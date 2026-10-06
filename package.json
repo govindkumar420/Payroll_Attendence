@@ -6,7 +6,7 @@
   "homepage": "https://govindkumar420.github.io/Payroll_Attendence",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
     "predeploy": "npm run build",

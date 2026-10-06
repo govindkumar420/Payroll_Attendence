@@ -1,61 +1,39 @@
-import { Employee, PayrollRecord } from '../context/StateContext';
-
-// Helper to format Date of Joining to ISO "YYYY-MM-DD"
-const parseShortDate = (dStr: string): string => {
-  const parts = dStr.split('-');
+const parseShortDate = (dStr) => {
+  const parts = dStr.split("-");
   if (parts.length === 3) {
-    const day = parts[0].padStart(2, '0');
-    const monthMap: Record<string, string> = {
-      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
-      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+    const day = parts[0].padStart(2, "0");
+    const monthMap = {
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12"
     };
-    const month = monthMap[parts[1]] || '01';
+    const month = monthMap[parts[1]] || "01";
     let year = parts[2];
     if (year.length === 2) {
       year = `20${year}`;
     }
     return `${year}-${month}-${day}`;
   }
-  return '2023-07-17';
+  return "2023-07-17";
 };
-
-export interface RawSlipData {
-  empCode: string;
-  name: string;
-  doj: string; // e.g. '17-Jul-23'
-  location: string;
-  designation: string;
-  uan: string;
-  esic: string;
-  totalDays: number;
-  presentDays: number;
-  leaveDays: number;
-  basic: number;
-  hra: number;
-  otherAllowance: number;
-  leaveEncashment: number;
-  bonus: number;
-  ot: number;
-  gross: number;
-  pf: number;
-  esicDed: number;
-  pt: number;
-  lwf: number;
-  otherDed: number;
-  advance: number;
-  totalDed: number;
-  netPay: number;
-}
-
-export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
+const RIDDHI_SIDDHI_RAW_DATA = [
   {
-    empCode: '200050',
-    name: 'Vaghela Pushprajsinh',
-    doj: '17-Jul-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101974247470',
-    esic: '',
+    empCode: "200050",
+    name: "Vaghela Pushprajsinh",
+    doj: "17-Jul-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101974247470",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -76,13 +54,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 18061
   },
   {
-    empCode: '200032',
-    name: 'Soyab Kadari',
-    doj: '28-Feb-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200032",
+    name: "Soyab Kadari",
+    doj: "28-Feb-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 28,
     leaveDays: 0,
@@ -103,13 +81,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 13394
   },
   {
-    empCode: '200005',
-    name: 'Vadher kanubha banesng',
-    doj: '19-Aug-22',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200005",
+    name: "Vadher kanubha banesng",
+    doj: "19-Aug-22",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -127,16 +105,16 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     otherDed: 0,
     advance: 0,
     totalDed: 1713,
-    netPay: 16000
+    netPay: 16e3
   },
   {
-    empCode: '200015',
-    name: 'SOLANKI YURAJSINH',
-    doj: '13-Sep-22',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200015",
+    name: "SOLANKI YURAJSINH",
+    doj: "13-Sep-22",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -157,13 +135,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15294
   },
   {
-    empCode: '200003',
-    name: 'karan Deda',
-    doj: '16-Aug-22',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200003",
+    name: "karan Deda",
+    doj: "16-Aug-22",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -184,13 +162,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14637
   },
   {
-    empCode: '200043',
-    name: 'Md. Shamir',
-    doj: '04-Jun-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101964156946',
-    esic: '',
+    empCode: "200043",
+    name: "Md. Shamir",
+    doj: "04-Jun-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101964156946",
+    esic: "",
     totalDays: 30,
     presentDays: 24,
     leaveDays: 0,
@@ -211,13 +189,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 8985
   },
   {
-    empCode: '200047',
-    name: 'SODHA NARENDRA',
-    doj: '25-Jun-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101974247458',
-    esic: '',
+    empCode: "200047",
+    name: "SODHA NARENDRA",
+    doj: "25-Jun-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101974247458",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -238,13 +216,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 17742
   },
   {
-    empCode: '200054',
-    name: 'Jadeja Rajveer',
-    doj: '14-Aug-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101987128652',
-    esic: '',
+    empCode: "200054",
+    name: "Jadeja Rajveer",
+    doj: "14-Aug-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101987128652",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -265,13 +243,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15064
   },
   {
-    empCode: '200056',
-    name: 'Ajay Sinh Jadeja',
-    doj: '01-Sep-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101997406747',
-    esic: '',
+    empCode: "200056",
+    name: "Ajay Sinh Jadeja",
+    doj: "01-Sep-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101997406747",
+    esic: "",
     totalDays: 30,
     presentDays: 24,
     leaveDays: 0,
@@ -292,13 +270,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 8785
   },
   {
-    empCode: '200058',
-    name: 'Kanjar Punit',
-    doj: '03-Oct-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102008489617',
-    esic: '',
+    empCode: "200058",
+    name: "Kanjar Punit",
+    doj: "03-Oct-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102008489617",
+    esic: "",
     totalDays: 30,
     presentDays: 16,
     leaveDays: 0,
@@ -319,13 +297,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 5943
   },
   {
-    empCode: '200060',
-    name: 'Kungada Hushen',
-    doj: '03-Oct-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102008489629',
-    esic: '',
+    empCode: "200060",
+    name: "Kungada Hushen",
+    doj: "03-Oct-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102008489629",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -346,13 +324,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15345
   },
   {
-    empCode: '200063',
-    name: 'Dal Sahil Husan',
-    doj: '03-Oct-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102008489638',
-    esic: '',
+    empCode: "200063",
+    name: "Dal Sahil Husan",
+    doj: "03-Oct-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102008489638",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -373,13 +351,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14644
   },
   {
-    empCode: '200066',
-    name: 'Govind Kumar',
-    doj: '19-Oct-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102008487796',
-    esic: '',
+    empCode: "200066",
+    name: "Govind Kumar",
+    doj: "19-Oct-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102008487796",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -400,13 +378,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 17270
   },
   {
-    empCode: '200067',
-    name: 'Deepak Kumar Prajapati',
-    doj: '19-Oct-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102008487806',
-    esic: '',
+    empCode: "200067",
+    name: "Deepak Kumar Prajapati",
+    doj: "19-Oct-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102008487806",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -427,13 +405,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 20793
   },
   {
-    empCode: '200064',
-    name: 'Riyaz Hussain',
-    doj: '18-Oct-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102009686873',
-    esic: '',
+    empCode: "200064",
+    name: "Riyaz Hussain",
+    doj: "18-Oct-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102009686873",
+    esic: "",
     totalDays: 30,
     presentDays: 22,
     leaveDays: 0,
@@ -454,13 +432,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 10160
   },
   {
-    empCode: '200080',
-    name: 'Bhoopendra Kumar',
-    doj: '16-Dec-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '0',
-    esic: '',
+    empCode: "200080",
+    name: "Bhoopendra Kumar",
+    doj: "16-Dec-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "0",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -481,13 +459,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 13126
   },
   {
-    empCode: '200082',
-    name: 'Guddu Kumar Yadav',
-    doj: '09-Jan-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '0',
-    esic: '',
+    empCode: "200082",
+    name: "Guddu Kumar Yadav",
+    doj: "09-Jan-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "0",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -508,13 +486,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15210
   },
   {
-    empCode: '200087',
-    name: 'Dinesh Pan',
-    doj: '27-Jan-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102035552091',
-    esic: '',
+    empCode: "200087",
+    name: "Dinesh Pan",
+    doj: "27-Jan-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102035552091",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -535,13 +513,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 12092
   },
   {
-    empCode: '200089',
-    name: 'Gigad Kiran',
-    doj: '08-Feb-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102040249123',
-    esic: '',
+    empCode: "200089",
+    name: "Gigad Kiran",
+    doj: "08-Feb-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102040249123",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -562,13 +540,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 13684
   },
   {
-    empCode: '200092',
-    name: 'Ker Husen',
-    doj: '01-Mar-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102051655855',
-    esic: '',
+    empCode: "200092",
+    name: "Ker Husen",
+    doj: "01-Mar-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102051655855",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -589,13 +567,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15096
   },
   {
-    empCode: '200095',
-    name: 'Chavda Ravi(House Keeping)',
-    doj: '14-Mar-24',
-    location: 'Cold Jamnagar',
-    designation: 'Housekeeping',
-    uan: '102051655244',
-    esic: '',
+    empCode: "200095",
+    name: "Chavda Ravi(House Keeping)",
+    doj: "14-Mar-24",
+    location: "Cold Jamnagar",
+    designation: "Housekeeping",
+    uan: "102051655244",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -616,13 +594,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 10914
   },
   {
-    empCode: '200097',
-    name: 'Mana Samad',
-    doj: '09-Apr-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101624084836',
-    esic: '',
+    empCode: "200097",
+    name: "Mana Samad",
+    doj: "09-Apr-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101624084836",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -643,13 +621,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14306
   },
   {
-    empCode: '200099',
-    name: 'Manki Samad',
-    doj: '09-Apr-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101932288228',
-    esic: '',
+    empCode: "200099",
+    name: "Manki Samad",
+    doj: "09-Apr-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101932288228",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -670,13 +648,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15262
   },
   {
-    empCode: '200100',
-    name: 'Sahil Shotra',
-    doj: '17-Apr-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101876081540',
-    esic: '',
+    empCode: "200100",
+    name: "Sahil Shotra",
+    doj: "17-Apr-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101876081540",
+    esic: "",
     totalDays: 30,
     presentDays: 28,
     leaveDays: 0,
@@ -697,13 +675,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 12516
   },
   {
-    empCode: '200101',
-    name: 'Raviraj jadeja',
-    doj: '22-Apr-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102065579343',
-    esic: '',
+    empCode: "200101",
+    name: "Raviraj jadeja",
+    doj: "22-Apr-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102065579343",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -724,13 +702,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14400
   },
   {
-    empCode: '200074',
-    name: 'Gohil kishanraj sinh',
-    doj: '28-Nov-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102029695447',
-    esic: '',
+    empCode: "200074",
+    name: "Gohil kishanraj sinh",
+    doj: "28-Nov-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102029695447",
+    esic: "",
     totalDays: 30,
     presentDays: 29,
     leaveDays: 0,
@@ -751,13 +729,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 11113
   },
   {
-    empCode: '200048',
-    name: 'Vikash',
-    doj: '29-Jun-23',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101906282228',
-    esic: '',
+    empCode: "200048",
+    name: "Vikash",
+    doj: "29-Jun-23",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101906282228",
+    esic: "",
     totalDays: 30,
     presentDays: 24,
     leaveDays: 0,
@@ -778,13 +756,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 8785
   },
   {
-    empCode: '200102',
-    name: 'Pratap',
-    doj: '13-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101994613953',
-    esic: '',
+    empCode: "200102",
+    name: "Pratap",
+    doj: "13-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101994613953",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -805,13 +783,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14027
   },
   {
-    empCode: '200103',
-    name: 'Ankit',
-    doj: '13-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101994613948',
-    esic: '',
+    empCode: "200103",
+    name: "Ankit",
+    doj: "13-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101994613948",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -832,13 +810,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 13108
   },
   {
-    empCode: '200104',
-    name: 'Ajay Kumar',
-    doj: '13-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102079133845',
-    esic: '',
+    empCode: "200104",
+    name: "Ajay Kumar",
+    doj: "13-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102079133845",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -859,13 +837,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 13076
   },
   {
-    empCode: '200105',
-    name: 'Kachhatiya Jingesh',
-    doj: '16-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102079132771',
-    esic: '',
+    empCode: "200105",
+    name: "Kachhatiya Jingesh",
+    doj: "16-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102079132771",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -886,13 +864,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15003
   },
   {
-    empCode: '200106',
-    name: 'Pramar Vishal',
-    doj: '16-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102079140191',
-    esic: '',
+    empCode: "200106",
+    name: "Pramar Vishal",
+    doj: "16-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102079140191",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -913,13 +891,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 16011
   },
   {
-    empCode: '200109',
-    name: 'Vijay Sinh Deda',
-    doj: '09-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101890169185',
-    esic: '',
+    empCode: "200109",
+    name: "Vijay Sinh Deda",
+    doj: "09-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101890169185",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -940,13 +918,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15047
   },
   {
-    empCode: '200110',
-    name: 'Meshaniya Ankit Keshavdash',
-    doj: '11-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200110",
+    name: "Meshaniya Ankit Keshavdash",
+    doj: "11-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -967,13 +945,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14062
   },
   {
-    empCode: '200112',
-    name: 'Sama Idrish',
-    doj: '09-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102079145612',
-    esic: '',
+    empCode: "200112",
+    name: "Sama Idrish",
+    doj: "09-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102079145612",
+    esic: "",
     totalDays: 30,
     presentDays: 22,
     leaveDays: 0,
@@ -994,13 +972,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 8012
   },
   {
-    empCode: '200113',
-    name: 'Fezal',
-    doj: '09-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '101992366903',
-    esic: '',
+    empCode: "200113",
+    name: "Fezal",
+    doj: "09-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "101992366903",
+    esic: "",
     totalDays: 30,
     presentDays: 15,
     leaveDays: 0,
@@ -1021,13 +999,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 5303
   },
   {
-    empCode: '200114',
-    name: 'Kachhatiya Vijay',
-    doj: '10-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102079177235',
-    esic: '',
+    empCode: "200114",
+    name: "Kachhatiya Vijay",
+    doj: "10-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102079177235",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1048,13 +1026,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 16037
   },
   {
-    empCode: '200123',
-    name: 'Patah navaz khan',
-    doj: '19-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102079170649',
-    esic: '',
+    empCode: "200123",
+    name: "Patah navaz khan",
+    doj: "19-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102079170649",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1075,13 +1053,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14051
   },
   {
-    empCode: '200086',
-    name: 'Dipak',
-    doj: '27-Jan-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102035552101',
-    esic: '',
+    empCode: "200086",
+    name: "Dipak",
+    doj: "27-Jan-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102035552101",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1102,13 +1080,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14019
   },
   {
-    empCode: '200128',
-    name: 'Gandhi Sunita Ben',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200128",
+    name: "Gandhi Sunita Ben",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1129,13 +1107,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 16531
   },
   {
-    empCode: '200130',
-    name: 'Kavita Verma',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200130",
+    name: "Kavita Verma",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1156,13 +1134,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15430
   },
   {
-    empCode: '200129',
-    name: 'Shanti Devi',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200129",
+    name: "Shanti Devi",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1183,13 +1161,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 16602
   },
   {
-    empCode: '200131',
-    name: 'Vishal Chavda',
-    doj: '07-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200131",
+    name: "Vishal Chavda",
+    doj: "07-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 18,
     leaveDays: 0,
@@ -1210,13 +1188,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 7648
   },
   {
-    empCode: '200132',
-    name: 'Nares Pal',
-    doj: '13-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '102087279171',
-    esic: '',
+    empCode: "200132",
+    name: "Nares Pal",
+    doj: "13-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "102087279171",
+    esic: "",
     totalDays: 30,
     presentDays: 10,
     leaveDays: 0,
@@ -1237,13 +1215,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 3568
   },
   {
-    empCode: '200133',
-    name: 'Jitendra Singh Prajapati',
-    doj: '08-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200133",
+    name: "Jitendra Singh Prajapati",
+    doj: "08-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 16,
     leaveDays: 0,
@@ -1264,13 +1242,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 5890
   },
   {
-    empCode: '200134',
-    name: 'Kanjariya Dipesh kumar',
-    doj: '07-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200134",
+    name: "Kanjariya Dipesh kumar",
+    doj: "07-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 18,
     leaveDays: 0,
@@ -1291,13 +1269,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 7648
   },
   {
-    empCode: '200135',
-    name: 'Vijay Shakya',
-    doj: '08-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200135",
+    name: "Vijay Shakya",
+    doj: "08-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 17,
     leaveDays: 0,
@@ -1318,13 +1296,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 7261
   },
   {
-    empCode: '200136',
-    name: 'Parmar Ravi Kumar',
-    doj: '11-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200136",
+    name: "Parmar Ravi Kumar",
+    doj: "11-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 14,
     leaveDays: 0,
@@ -1345,13 +1323,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 6101
   },
   {
-    empCode: '200137',
-    name: 'Kachhatiya Jitendra',
-    doj: '07-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "200137",
+    name: "Kachhatiya Jitendra",
+    doj: "07-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 18,
     leaveDays: 0,
@@ -1372,13 +1350,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 7648
   },
   {
-    empCode: '200139',
-    name: 'Khodu Bhai Hirani',
-    doj: '17-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Housekeeping',
-    uan: '',
-    esic: '',
+    empCode: "200139",
+    name: "Khodu Bhai Hirani",
+    doj: "17-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Housekeeping",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 8,
     leaveDays: 0,
@@ -1394,18 +1372,18 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     pt: 0,
     lwf: 1,
     otherDed: 0,
-    advance: 2000,
+    advance: 2e3,
     totalDed: 2402,
     netPay: 1779
   },
   {
-    empCode: '200140',
-    name: 'Mehul Parmar',
-    doj: '16-Jun-24',
-    location: 'Cold Jamnagar',
-    designation: 'Helper',
-    uan: '',
-    esic: '',
+    empCode: "200140",
+    name: "Mehul Parmar",
+    doj: "16-Jun-24",
+    location: "Cold Jamnagar",
+    designation: "Helper",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 9,
     leaveDays: 0,
@@ -1426,13 +1404,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 4166
   },
   {
-    empCode: '200124',
-    name: 'Ajay Verma De. Boy',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Helper',
-    uan: '',
-    esic: '',
+    empCode: "200124",
+    name: "Ajay Verma De. Boy",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Helper",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1453,13 +1431,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 17930
   },
   {
-    empCode: '200127',
-    name: 'Dharmendra Kushwaha',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Helper',
-    uan: '',
-    esic: '',
+    empCode: "200127",
+    name: "Dharmendra Kushwaha",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Helper",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1480,13 +1458,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 15007
   },
   {
-    empCode: '200126',
-    name: 'Meshavaniya Sumit kumar',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Helper',
-    uan: '',
-    esic: '',
+    empCode: "200126",
+    name: "Meshavaniya Sumit kumar",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Helper",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1507,13 +1485,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 13057
   },
   {
-    empCode: '200125',
-    name: 'Arif Khan',
-    doj: '26-May-24',
-    location: 'Cold Jamnagar',
-    designation: 'Helper',
-    uan: '',
-    esic: '',
+    empCode: "200125",
+    name: "Arif Khan",
+    doj: "26-May-24",
+    location: "Cold Jamnagar",
+    designation: "Helper",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1534,13 +1512,13 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 14815
   },
   {
-    empCode: '30029',
-    name: 'Ajit Singh',
-    doj: '10-Jul-24',
-    location: 'TML DEF Gandhidham',
-    designation: 'Floor Associate',
-    uan: '0',
-    esic: '',
+    empCode: "30029",
+    name: "Ajit Singh",
+    doj: "10-Jul-24",
+    location: "TML DEF Gandhidham",
+    designation: "Floor Associate",
+    uan: "0",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1558,16 +1536,16 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     otherDed: 0,
     advance: 0,
     totalDed: 1850,
-    netPay: 17000
+    netPay: 17e3
   },
   {
-    empCode: '30043',
-    name: 'Dinesh Pariya',
-    doj: '10-Jul-24',
-    location: 'TML DEF Gandhidham',
-    designation: 'Floor Associate',
-    uan: '',
-    esic: '',
+    empCode: "30043",
+    name: "Dinesh Pariya",
+    doj: "10-Jul-24",
+    location: "TML DEF Gandhidham",
+    designation: "Floor Associate",
+    uan: "",
+    esic: "",
     totalDays: 30,
     presentDays: 30,
     leaveDays: 0,
@@ -1588,34 +1566,31 @@ export const RIDDHI_SIDDHI_RAW_DATA: RawSlipData[] = [
     netPay: 16004
   }
 ];
-
-// Generate standard Employees array
-export const RIDDHI_SIDDHI_EMPLOYEES: Employee[] = RIDDHI_SIDDHI_RAW_DATA.map((r, idx) => {
+const RIDDHI_SIDDHI_EMPLOYEES = RIDDHI_SIDDHI_RAW_DATA.map((r, idx) => {
   const avatarPhotos = [
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150',
-    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150',
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150',
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
-    'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150'
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
+    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150",
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150",
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
+    "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150"
   ];
-
   return {
     id: r.empCode,
     name: r.name,
     photoUrl: avatarPhotos[idx % avatarPhotos.length],
-    mobileNumber: `+91 98${Math.floor(Math.random() * 90000000 + 10000000)}`,
-    email: `${r.name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@riddhisiddhi.com`,
-    address: 'G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018',
-    dob: '1995-05-15',
-    gender: r.name.toLowerCase().includes('devi') || r.name.toLowerCase().includes('ben') || r.name.toLowerCase().includes('kavita') || r.name.toLowerCase().includes('sunita') ? 'Female' : 'Male',
-    department: r.designation.includes('House') ? 'Housekeeping' : r.designation.includes('Helper') ? 'Logistics' : 'Operations',
+    mobileNumber: `+91 98${Math.floor(Math.random() * 9e7 + 1e7)}`,
+    email: `${r.name.toLowerCase().replace(/[^a-z0-9]/g, ".")}@riddhisiddhi.com`,
+    address: "G - PLOT HIG MHADA COMPLEX-158, SANT TUKARAM NAGAR, PUNE MAHARASHTRA- 411018",
+    dob: "1995-05-15",
+    gender: r.name.toLowerCase().includes("devi") || r.name.toLowerCase().includes("ben") || r.name.toLowerCase().includes("kavita") || r.name.toLowerCase().includes("sunita") ? "Female" : "Male",
+    department: r.designation.includes("House") ? "Housekeeping" : r.designation.includes("Helper") ? "Logistics" : "Operations",
     designation: r.designation,
     joiningDate: parseShortDate(r.doj),
     location: r.location,
-    employmentType: 'Full-Time',
-    shiftId: 'S1',
-    manager: 'Sarah Connor',
+    employmentType: "Full-Time",
+    shiftId: "S1",
+    manager: "Sarah Connor",
     salaryStructure: {
       basic: r.basic,
       hra: r.hra,
@@ -1630,25 +1605,23 @@ export const RIDDHI_SIDDHI_EMPLOYEES: Employee[] = RIDDHI_SIDDHI_RAW_DATA.map((r
       overtimeRate: 150
     },
     bankDetails: {
-      bankName: 'State Bank of India',
-      accountNumber: `3098${Math.floor(Math.random() * 90000000 + 10000000)}`,
-      ifscCode: 'SBIN0001234'
+      bankName: "State Bank of India",
+      accountNumber: `3098${Math.floor(Math.random() * 9e7 + 1e7)}`,
+      ifscCode: "SBIN0001234"
     },
-    pfNumber: r.uan || `1019${Math.floor(Math.random() * 90000000 + 10000000)}`,
-    uanNumber: r.uan || '',
-    esiNumber: r.esic || '',
-    esicNumber: r.esic || '',
-    panNumber: `ABCDE${Math.floor(Math.random() * 9000 + 1000)}F`,
-    aadhaarNumber: `1234-${Math.floor(Math.random() * 9000 + 1000)}-${Math.floor(Math.random() * 9000 + 1000)}`,
-    status: 'Active'
+    pfNumber: r.uan || `1019${Math.floor(Math.random() * 9e7 + 1e7)}`,
+    uanNumber: r.uan || "",
+    esiNumber: r.esic || "",
+    esicNumber: r.esic || "",
+    panNumber: `ABCDE${Math.floor(Math.random() * 9e3 + 1e3)}F`,
+    aadhaarNumber: `1234-${Math.floor(Math.random() * 9e3 + 1e3)}-${Math.floor(Math.random() * 9e3 + 1e3)}`,
+    status: "Active"
   };
 });
-
-// Generate June 2024 Payroll Records matching the exact PDF pages
-export const RIDDHI_SIDDHI_PAYROLL_JUN_2024: PayrollRecord[] = RIDDHI_SIDDHI_RAW_DATA.map((r) => ({
+const RIDDHI_SIDDHI_PAYROLL_JUN_2024 = RIDDHI_SIDDHI_RAW_DATA.map((r) => ({
   id: `${r.empCode}_2024-06`,
   employeeId: r.empCode,
-  month: '2024-06',
+  month: "2024-06",
   totalDays: r.totalDays,
   presentDays: r.presentDays,
   absentDays: Math.max(0, r.totalDays - r.presentDays),
@@ -1682,17 +1655,15 @@ export const RIDDHI_SIDDHI_PAYROLL_JUN_2024: PayrollRecord[] = RIDDHI_SIDDHI_RAW
     totalDeductions: r.totalDed
   },
   netSalary: r.netPay,
-  status: 'Disbursed',
-  disbursedDate: '2024-07-05',
-  paymentMode: 'BY BANK',
+  status: "Disbursed",
+  disbursedDate: "2024-07-05",
+  paymentMode: "BY BANK",
   transactionRef: `NEFT-RS-202406-${r.empCode}`
 }));
-
-// Also generate August 2026 Payroll Records for the active application month
-export const RIDDHI_SIDDHI_PAYROLL_AUG_2026: PayrollRecord[] = RIDDHI_SIDDHI_RAW_DATA.map((r) => ({
+const RIDDHI_SIDDHI_PAYROLL_AUG_2026 = RIDDHI_SIDDHI_RAW_DATA.map((r) => ({
   id: `${r.empCode}_2026-08`,
   employeeId: r.empCode,
-  month: '2026-08',
+  month: "2026-08",
   totalDays: r.totalDays,
   presentDays: r.presentDays,
   absentDays: Math.max(0, r.totalDays - r.presentDays),
@@ -1726,27 +1697,23 @@ export const RIDDHI_SIDDHI_PAYROLL_AUG_2026: PayrollRecord[] = RIDDHI_SIDDHI_RAW
     totalDeductions: r.totalDed
   },
   netSalary: r.netPay,
-  status: 'Approved',
-  disbursedDate: '2026-08-31',
-  paymentMode: 'BY BANK',
+  status: "Approved",
+  disbursedDate: "2026-08-31",
+  paymentMode: "BY BANK",
   transactionRef: `TXN-RS-202608-${r.empCode}`
 }));
-
-/**
- * Utility to calculate the next unique employee code
- * If series is 200xxx, finds max(200xxx) + 1
- * If series is custom, increments accordingly
- */
-export const getNextEmployeeCode = (existingEmployees: Employee[], prefix: string = '200'): string => {
-  const numericCodes = existingEmployees
-    .map(e => parseInt(e.id, 10))
-    .filter(n => !isNaN(n) && String(n).startsWith(prefix));
-
+const getNextEmployeeCode = (existingEmployees, prefix = "200") => {
+  const numericCodes = existingEmployees.map((e) => parseInt(e.id, 10)).filter((n) => !isNaN(n) && String(n).startsWith(prefix));
   if (numericCodes.length > 0) {
     const maxCode = Math.max(...numericCodes);
     return String(maxCode + 1);
   }
-
-  // Default next code
-  return `${prefix}${String(existingEmployees.length + 1).padStart(3, '0')}`;
+  return `${prefix}${String(existingEmployees.length + 1).padStart(3, "0")}`;
+};
+export {
+  RIDDHI_SIDDHI_EMPLOYEES,
+  RIDDHI_SIDDHI_PAYROLL_AUG_2026,
+  RIDDHI_SIDDHI_PAYROLL_JUN_2024,
+  RIDDHI_SIDDHI_RAW_DATA,
+  getNextEmployeeCode
 };
