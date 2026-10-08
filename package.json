@@ -10,13 +10,16 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "db:init": "node database/init.js",
+    "db:postgres": "psql -f database/postgres.sql"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
     "lucide-react": "^1.30.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",

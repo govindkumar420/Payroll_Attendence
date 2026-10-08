@@ -1,71 +1,50 @@
+# Gnosis Ventures - Payroll & Attendance Portal
 
-# 🏢 Gnosis Ventures - Payroll & Attendance Portal
+A React and Vite payroll and attendance demo. The application stores its data in the browser's `localStorage`; it does not require PostgreSQL, a database server, or an API server.
 
-A comprehensive, enterprise-grade Attendance and Payroll Management System built with **React**, **JavaScript and JSX**, **Vite**, and styled with custom glassmorphism dark/light mode.
+## Run locally
 
-🌐 **Live Demo on GitHub Pages**: [https://govindkumar420.github.io/Payroll_Attendence/](https://govindkumar420.github.io/Payroll_Attendence/)
-
----
-
-## ✨ Features
-
-- 👥 **Multi-Role Access Control (RBAC)**:
-  - Super Admin
-  - HR Manager
-  - Payroll Manager
-  - Department Manager
-  - Accountant
-  - Employee Persona
-- ⏱️ **Attendance Tracking & Terminal**: Live camera capture, biometric simulation, daily check-in/out, logs, geolocation.
-- 💰 **Automated Payroll Engine**: Salary computation, PF (12%), ESIC (0.75%), Professional Tax (PT), TDS deduction, overtime calculations.
-- 🧾 **Salary Slips**: Professional printable payslips with company branding.
-- 🏖️ **Leave & Advance Desk**: Apply leaves, loan requests, workflow approval pipelines.
-- 📊 **Statutory & Bank Transfer Reports**: Form 16 / PF / ESIC reports and NEFT/RTGS bank disbursal sheets.
-- 🎨 **Modern Dark & Light UI**: Responsive glassmorphic layout, customizable themes, persona switching, and credential inspector.
-
----
-
-## 🔑 Default Login Credentials
-
-| Role | User ID / Email | Password |
-| :--- | :--- | :--- |
-| **Super Admin** | `admin@gnosisventures.com` | `Admin@2026` |
-| **HR Manager** | `hr@gnosisventures.com` | `Hr@2026#` |
-| **Payroll Manager** | `payroll@gnosisventures.com` | `Payroll@2026` |
-| **Department Manager** | `manager@gnosisventures.com` | `Manager@2026` |
-| **Accountant** | `accountant@gnosisventures.com` | `Accounts@2026` |
-| **Employee** | `EMP-000001` / `employee@gnosisventures.com` | `Emp@000001` |
-
----
-
-## 🚀 Local Development
-
-1. **Clone repository**:
-   ```bash
-   git clone https://github.com/govindkumar420/Payroll_Attendence.git
-   cd Payroll_Attendence
-   ```
-
-2. **Install dependencies**:
+1. Install Node.js 20 or newer.
+2. Install dependencies:
    ```bash
    npm install
    ```
-
-3. **Start development server**:
+3. Start the app:
    ```bash
    npm run dev
    ```
+4. On the sign-in screen, enter a display email, select a demo role, and sign in. No password or API is required.
 
-4. **Build production bundle**:
-   ```bash
-   npm run build
-   ```
+Employees, attendance, shifts, leave requests, holidays, loans, payroll, company settings, theme, and the selected demo session are saved in this browser under `payroll-attendance:v1`. Data stays on this device and browser profile; it does not sync between devices. Clearing site data or browser storage removes it. Use **Settings > Role Access Matrix** for the available demo roles.
 
----
+## Important security limitation
 
-## ⚙️ GitHub Pages Setup
+This is local demo storage, **not secure authentication or a production database**. Anyone with access to this browser profile can inspect or change stored data and choose any demo role. Do not enter real employee, identity, bank, attendance, or salary information. Use a secured server-side API and database before using real payroll data.
 
-To enable GitHub Pages from GitHub Actions:
-1. Go to your repository on GitHub: **Settings > Pages**
-2. Under **Build and deployment > Source**, select **GitHub Actions**
-3. On every push to `main`, the `.github/workflows/deploy.yml` workflow will automatically build and publish the live site.
+## Build
+
+```bash
+npm run build
+```
+
+GitHub Pages can host the static demo; each viewer has a separate browser-local copy of its data.
+
+## Database
+
+Run the database setup script to create a local SQLite database for payroll and attendance records:
+
+`ash
+npm run db:init
+`
+
+This creates database/payroll_attendance.db with tables for companies, employees, attendance, leave requests, holidays, loans, payroll runs, and audit logs.
+
+## PostgreSQL schema
+
+For a server-backed database, run the PostgreSQL schema script:
+
+`ash
+npm run db:postgres
+`
+
+This creates the database objects for companies, employees, attendance, leave requests, holidays, loans, payroll runs, and audit logs in PostgreSQL.
