@@ -78,7 +78,7 @@ const Payroll = () => {
         "button",
         {
           className: "btn btn-primary",
-          style: { background: "linear-gradient(135deg, #008f83 0%, #00695f 100%)", boxShadow: "0 4px 14px rgba(0, 105, 95, 0.35)", gap: "8px" },
+          style: { background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", boxShadow: "0 4px 14px rgba(5, 60, 120, 0.35)", gap: "8px" },
           onClick: handleOpenSampleSlip,
           disabled: isEmployee ? !payroll.some((p) => p.employeeId === EMPLOYEE_PERSONA_ID) : !payroll.length,
           children: [
@@ -289,7 +289,7 @@ const Payroll = () => {
               "button",
               {
                 className: "btn btn-primary",
-                style: { padding: "6px 14px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff", fontWeight: 600, boxShadow: "0 2px 8px rgba(0, 150, 136, 0.3)" },
+                style: { padding: "6px 14px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", color: "#ffffff", fontWeight: 600, boxShadow: "0 2px 8px rgba(5, 60, 120, 0.3)" },
                 onClick: () => setActivePayslip(pay),
                 title: "Open & Print Salary Slip",
                 children: [

@@ -3,27 +3,31 @@
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   
-  /* Light Theme variables */
+  /* Light Theme variables - NexaPay Navy & Royal Blue */
   --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-surface: rgba(255, 255, 255, 0.8);
+  --bg-secondary: #f0f4f9;
+  --bg-surface: rgba(255, 255, 255, 0.85);
   --bg-surface-solid: #ffffff;
-  --border-color: rgba(226, 232, 240, 0.8);
+  --border-color: rgba(203, 213, 225, 0.75);
   --border-color-solid: #e2e8f0;
   
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-primary: #041936;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
   
-  --primary: #008f83;
-  --primary-hover: #00796f;
-  --primary-light: rgba(0, 143, 131, 0.1);
+  /* NexaPay Corporate Navy & Blue */
+  --primary: #063c78;
+  --primary-hover: #042a54;
+  --primary-light: rgba(6, 60, 120, 0.08);
+  --primary-glow: rgba(6, 60, 120, 0.15);
   
-  --accent: #009688;
-  --accent-light: rgba(0, 150, 136, 0.1);
+  /* NexaPay Vibrant Financial Growth Green */
+  --accent: #16a34a;
+  --accent-hover: #15803d;
+  --accent-light: rgba(22, 163, 74, 0.12);
   
-  --success: #10b981;
-  --success-light: rgba(16, 185, 129, 0.1);
+  --success: #16a34a;
+  --success-light: rgba(22, 163, 74, 0.12);
   --warning: #f59e0b;
   --warning-light: rgba(245, 158, 11, 0.1);
   --danger: #ef4444;
@@ -31,42 +35,44 @@
   
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(6, 60, 120, 0.08), 0 4px 6px -2px rgba(6, 60, 120, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(6, 60, 120, 0.12), 0 10px 10px -5px rgba(6, 60, 120, 0.06);
   
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(226, 232, 240, 0.6);
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(226, 232, 240, 0.85);
   --glass-blur: 12px;
 
   /* Custom Scrollbar Tokens */
   --scrollbar-track: rgba(0, 0, 0, 0.04);
   --scrollbar-thumb: rgba(100, 116, 139, 0.35);
-  --scrollbar-thumb-hover: #008f83;
-  --scrollbar-thumb-active: #00796f;
+  --scrollbar-thumb-hover: #063c78;
+  --scrollbar-thumb-active: #042a54;
 }
 
 [data-theme='dark'] {
-  /* Dark Theme variables */
-  --bg-primary: #090d16;
-  --bg-secondary: #0f1322;
-  --bg-surface: rgba(20, 26, 46, 0.6);
-  --bg-surface-solid: #121829;
-  --border-color: rgba(255, 255, 255, 0.05);
-  --border-color-solid: #1e293b;
+  /* Dark Theme variables - NexaPay Midnight Navy & Electric Blue */
+  --bg-primary: #050e1a;
+  --bg-secondary: #08162b;
+  --bg-surface: rgba(10, 26, 50, 0.65);
+  --bg-surface-solid: #0c213f;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-color-solid: #153358;
   
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #64748b;
   
-  --primary: #14b8a6;
-  --primary-hover: #0d9488;
-  --primary-light: rgba(20, 184, 166, 0.15);
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: rgba(37, 99, 235, 0.16);
+  --primary-glow: rgba(37, 99, 235, 0.28);
   
-  --accent: #2dd4bf;
-  --accent-light: rgba(45, 212, 191, 0.15);
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-light: rgba(34, 197, 94, 0.16);
   
-  --success: #34d399;
-  --success-light: rgba(52, 211, 153, 0.15);
+  --success: #22c55e;
+  --success-light: rgba(34, 197, 94, 0.16);
   --warning: #fbbf24;
   --warning-light: rgba(251, 191, 36, 0.15);
   --danger: #f87171;
@@ -77,15 +83,15 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.35), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.45), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
   
-  --glass-bg: rgba(15, 20, 35, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.04);
+  --glass-bg: rgba(10, 24, 46, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.06);
   --glass-blur: 16px;
 
   /* Custom Scrollbar Tokens (Dark) */
   --scrollbar-track: rgba(255, 255, 255, 0.02);
   --scrollbar-thumb: rgba(148, 163, 184, 0.28);
-  --scrollbar-thumb-hover: #2dd4bf;
-  --scrollbar-thumb-active: #14b8a6;
+  --scrollbar-thumb-hover: #3b82f6;
+  --scrollbar-thumb-active: #2563eb;
 }
 
 * {
@@ -168,7 +174,7 @@ body {
 .glass-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
-  border-color: rgba(0, 143, 131, 0.2);
+  border-color: rgba(6, 60, 120, 0.25);
 }
 
 /* Dashboard App Layout */
@@ -279,7 +285,7 @@ input:focus, select:focus, textarea:focus {
 
 .btn-primary:hover {
   background-color: var(--primary-hover);
-  box-shadow: 0 4px 12px rgba(0, 143, 131, 0.3);
+  box-shadow: 0 4px 12px rgba(6, 60, 120, 0.3);
   transform: translateY(-1px);
 }
 
@@ -478,8 +484,8 @@ tr:hover td {
 
 .salary-slip-logo-wrapper {
   flex-shrink: 0;
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 75px;
   display: flex;
   align-items: center;
   justify-content: center;

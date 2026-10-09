@@ -12,10 +12,8 @@ import { Loans } from "./views/Loans";
 import { Reports } from "./views/Reports";
 import { Settings } from "./views/Settings";
 import { CompanyLogo } from "./components/CompanyLogo";
-import { RoleCredentialsModal } from "./components/RoleCredentialsModal";
 import { UserProfileMenu } from "./components/UserProfileMenu";
 import { ChangeProfilePhotoModal } from "./components/ChangeProfilePhotoModal";
-import { ForgotPasswordModal } from "./components/ForgotPasswordModal";
 import { LoginScreen } from "./components/LoginScreen";
 import {
   LayoutDashboard,
@@ -32,17 +30,14 @@ import {
   MessageSquare,
   Menu,
   X,
-  KeyRound,
   ChevronDown
 } from "lucide-react";
 const App = () => {
-  const { theme, setTheme, activeRole, isAdministratorSession, setActiveRole, notifications, personaPhotos, isLoggedIn, logout } = useAppState();
+  const { theme, setTheme, activeRole, notifications, personaPhotos, isLoggedIn, authReady, user, logout, storageError } = useAppState();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(typeof window !== "undefined" ? window.innerWidth > 768 : true);
-  const [credentialsModalOpen, setCredentialsModalOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [changePhotoModalOpen, setChangePhotoModalOpen] = useState(false);
-  const [forgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false);
   const permissions = getPermissions(activeRole);
   useEffect(() => {
     if (!isTabVisibleForRole(activeRole, activeTab)) {
@@ -59,44 +54,20 @@ const App = () => {
     }
   };
   const getPersonaName = () => {
-    switch (activeRole) {
-      case "Super Admin":
-        return "Administrator";
-      case "HR Manager":
-        return "HR Manager";
-      case "Payroll Manager":
-        return "Payroll Manager";
-      case "Department Manager":
-        return "Department Manager";
-      case "Employee":
-        return "Employee User (EMP-000001)";
-      case "Accountant":
-        return "Accountant";
-      default:
-        return "User Session";
-    }
+    return user?.email || "Authenticated User";
   };
   const getPersonaPhoto = () => {
     return personaPhotos[activeRole] || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150";
   };
   const getPersonaEmail = () => {
-    switch (activeRole) {
-      case "Super Admin":
-        return "admin@gnosisventures.com";
-      case "HR Manager":
-        return "hr@gnosisventures.com";
-      case "Payroll Manager":
-        return "payroll@gnosisventures.com";
-      case "Department Manager":
-        return "manager@gnosisventures.com";
-      case "Employee":
-        return "employee@gnosisventures.com";
-      case "Accountant":
-        return "accountant@gnosisventures.com";
-      default:
-        return "user@gnosisventures.com";
-    }
+    return user?.email || "";
   };
+  if (!authReady) {
+    return /* @__PURE__ */ jsx("div", {
+      style: { minHeight: "100vh", display: "grid", placeItems: "center", color: "var(--text-secondary)" },
+      children: "Connecting to the authentication service..."
+    });
+  }
   if (!isLoggedIn) {
     return /* @__PURE__ */ jsx(LoginScreen, {});
   }
@@ -177,7 +148,7 @@ const App = () => {
       }
     ),
     sidebarOpen && /* @__PURE__ */ jsxs("aside", { className: "sidebar", children: [
-      /* @__PURE__ */ jsx("div", { style: { marginBottom: "28px", padding: "0 6px" }, children: /* @__PURE__ */ jsx(CompanyLogo, { size: "sm", showText: true }) }),
+      /* @__PURE__ */ jsx("div", { style: { marginBottom: "24px", padding: "0 4px" }, children: /* @__PURE__ */ jsx("div", { style: { background: "#ffffff", padding: "8px 12px", borderRadius: "12px", boxShadow: "0 2px 8px rgba(0,0,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx(CompanyLogo, { size: "sm" }) }) }),
       /* @__PURE__ */ jsx("nav", { style: { display: "flex", flexDirection: "column", gap: "6px", flexGrow: 1 }, children: visibleNavItems.map((item) => /* @__PURE__ */ jsxs(
         "button",
         {
@@ -239,44 +210,12 @@ const App = () => {
             }
           ),
           /* @__PURE__ */ jsx("h1", { style: { fontSize: "18px", fontWeight: 800 }, children: allNavItems.find((n) => n.id === activeTab)?.label }),
-          /* @__PURE__ */ jsxs("div", { className: "badge badge-primary", style: { fontSize: "11px", fontWeight: 700, padding: "4px 10px", gap: "6px", background: "var(--primary-glow)", border: "1px solid var(--primary)" }, children: [
-            /* @__PURE__ */ jsx(CompanyLogo, { size: "xs" }),
-            /* @__PURE__ */ jsx("span", { children: "Gnosis Ventures" })
+          /* @__PURE__ */ jsxs("div", { className: "badge badge-primary", style: { fontSize: "11px", fontWeight: 700, padding: "4px 10px", gap: "8px", background: "var(--primary-glow)", border: "1px solid var(--primary)", alignItems: "center" }, children: [
+            /* @__PURE__ */ jsx("div", { style: { background: "#ffffff", padding: "2px 6px", borderRadius: "6px", display: "inline-flex", alignItems: "center" }, children: /* @__PURE__ */ jsx(CompanyLogo, { size: "xs", style: { height: "20px" } }) }),
+            /* @__PURE__ */ jsx("span", { children: "NEXAPAY" })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "20px" }, children: [
-          isAdministratorSession && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-            /* @__PURE__ */ jsx("span", { style: { fontSize: "11px", fontWeight: 700, textTransform: "uppercase", color: "var(--text-muted)" }, children: "Role Switcher:" }),
-            /* @__PURE__ */ jsxs(
-              "select",
-              {
-                value: activeRole,
-                onChange: (e) => setActiveRole(e.target.value),
-                style: { width: "170px", padding: "6px 10px", borderRadius: "8px", fontSize: "12px", fontWeight: 600 },
-                children: [
-                  /* @__PURE__ */ jsx("option", { value: "Super Admin", children: "Super Admin" }),
-                  /* @__PURE__ */ jsx("option", { value: "HR Manager", children: "HR Manager" }),
-                  /* @__PURE__ */ jsx("option", { value: "Payroll Manager", children: "Payroll Manager" }),
-                  /* @__PURE__ */ jsx("option", { value: "Department Manager", children: "Department Manager" }),
-                  /* @__PURE__ */ jsx("option", { value: "Employee", children: "Employee Persona" }),
-                  /* @__PURE__ */ jsx("option", { value: "Accountant", children: "Accountant" })
-                ]
-              }
-            )
-          ] }),
-          isAdministratorSession && /* @__PURE__ */ jsxs(
-            "button",
-            {
-              className: "btn btn-outline",
-              onClick: () => setCredentialsModalOpen(true),
-              style: { fontSize: "11px", padding: "6px 12px", gap: "6px", borderRadius: "8px", fontWeight: 700 },
-              title: "View User IDs & Passwords for all roles",
-              children: [
-                /* @__PURE__ */ jsx(KeyRound, { size: 14, style: { color: "#009688" } }),
-                /* @__PURE__ */ jsx("span", { children: "IDs & Passwords" })
-              ]
-            }
-          ),
           /* @__PURE__ */ jsx(
             "button",
             {
@@ -302,7 +241,7 @@ const App = () => {
                 transition: "all 0.2s ease"
               },
               onClick: () => setProfileMenuOpen(!profileMenuOpen),
-              title: "Account Options (Change Photo, Password, Logout)",
+              title: "Account Options (Change Photo, Logout)",
               children: [
                 /* @__PURE__ */ jsx(
                   "img",
@@ -332,14 +271,16 @@ const App = () => {
               photoUrl: getPersonaPhoto(),
               email: getPersonaEmail(),
               onChangePhotoClick: () => setChangePhotoModalOpen(true),
-              onForgotPasswordClick: () => setForgotPasswordModalOpen(true),
-              onViewCredentialsClick: () => setCredentialsModalOpen(true),
-              isAdministratorSession,
               onLogoutClick: logout
             }
           )
         ] })
       ] }),
+      storageError && /* @__PURE__ */ jsx("div", {
+        role: "alert",
+        style: { margin: "12px 24px", padding: "10px 14px", border: "1px solid var(--danger)", borderRadius: "8px", color: "var(--danger)" },
+        children: storageError
+      }),
       /* @__PURE__ */ jsx("div", { className: "view-container", children: renderView() })
     ] }),
     /* @__PURE__ */ jsx(
@@ -352,23 +293,6 @@ const App = () => {
         personaName: getPersonaName()
       }
     ),
-    /* @__PURE__ */ jsx(
-      ForgotPasswordModal,
-      {
-        isOpen: forgotPasswordModalOpen,
-        onClose: () => setForgotPasswordModalOpen(false),
-        role: activeRole,
-        personaName: getPersonaName(),
-        userEmail: getPersonaEmail()
-      }
-    ),
-    isAdministratorSession && /* @__PURE__ */ jsx(
-      RoleCredentialsModal,
-      {
-        isOpen: credentialsModalOpen,
-        onClose: () => setCredentialsModalOpen(false)
-      }
-    )
   ] });
 };
 var App_default = App;

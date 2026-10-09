@@ -183,7 +183,7 @@ const Reports = () => {
               "button",
               {
                 className: "btn btn-primary",
-                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff" },
+                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", color: "#ffffff" },
                 onClick: () => setActivePayslip(pay),
                 title: "Print Salary Slip",
                 children: [
@@ -237,7 +237,7 @@ const Reports = () => {
               "button",
               {
                 className: "btn btn-primary",
-                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff" },
+                style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", color: "#ffffff" },
                 onClick: () => setActivePayslip(pay),
                 title: "Print Salary Slip",
                 children: [
@@ -273,7 +273,7 @@ const Reports = () => {
             "button",
             {
               className: "btn btn-primary",
-              style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff" },
+              style: { padding: "4px 10px", fontSize: "11px", gap: "4px", background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", color: "#ffffff" },
               onClick: () => setActivePayslip(pay),
               title: "Print Salary Slip",
               children: [

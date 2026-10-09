@@ -221,7 +221,7 @@ const Attendance = () => {
             }, children: [
               /* @__PURE__ */ jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center" }, children: [
                 /* @__PURE__ */ jsxs("label", { style: { fontSize: "12px", fontWeight: 700, margin: 0, display: "flex", alignItems: "center", gap: "6px" }, children: [
-                  /* @__PURE__ */ jsx(MapPin, { size: 14, style: { color: "#009688" } }),
+                  /* @__PURE__ */ jsx(MapPin, { size: 14, style: { color: "var(--accent)" } }),
                   "GPS Geo-Fence & Camera"
                 ] }),
                 /* @__PURE__ */ jsx("span", { className: "badge badge-success", style: { fontSize: "10px", padding: "2px 6px" }, children: "Active Zone" })
@@ -291,12 +291,12 @@ const Attendance = () => {
                       padding: "9px 12px",
                       fontSize: "12px",
                       fontWeight: 700,
-                      background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)",
+                      background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "8px",
-                      boxShadow: "0 4px 12px rgba(0, 150, 136, 0.25)"
+                      boxShadow: "0 4px 12px rgba(5, 60, 120, 0.25)"
                     },
                     onClick: () => setIsCameraModalOpen(true),
                     children: [
@@ -434,7 +434,7 @@ const Attendance = () => {
                   borderRadius: "6px",
                   border: "1px solid var(--border-color-solid)"
                 }, children: [
-                  log.method?.includes("GPS") ? /* @__PURE__ */ jsx(MapPin, { size: 11, style: { color: "#009688" } }) : log.method?.includes("RFID") ? /* @__PURE__ */ jsx(KeyRound, { size: 11, style: { color: "#f59e0b" } }) : log.method?.includes("QR") ? /* @__PURE__ */ jsx(ScanLine, { size: 11, style: { color: "#8b5cf6" } }) : /* @__PURE__ */ jsx(Fingerprint, { size: 11, style: { color: "#10b981" } }),
+                  log.method?.includes("GPS") ? /* @__PURE__ */ jsx(MapPin, { size: 11, style: { color: "var(--accent)" } }) : log.method?.includes("RFID") ? /* @__PURE__ */ jsx(KeyRound, { size: 11, style: { color: "#f59e0b" } }) : log.method?.includes("QR") ? /* @__PURE__ */ jsx(ScanLine, { size: 11, style: { color: "#8b5cf6" } }) : /* @__PURE__ */ jsx(Fingerprint, { size: 11, style: { color: "#10b981" } }),
                   log.method || "Biometric"
                 ] }),
                 log.photo ? /* @__PURE__ */ jsxs(

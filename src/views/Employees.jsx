@@ -187,7 +187,7 @@ const Employees = () => {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Gnosis_Ventures_Employees_${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv`);
+    link.setAttribute("download", `NexaPay_Employees_${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -200,7 +200,7 @@ const Employees = () => {
       name,
       photoUrl,
       mobileNumber,
-      email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, ".")}@gnosisventures.com`,
+      email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, ".")}@nexapay.com`,
       address,
       location,
       dob,
@@ -260,7 +260,7 @@ const Employees = () => {
             " Active Employees"
           ] })
         ] }),
-        /* @__PURE__ */ jsx("p", { style: { color: "var(--text-secondary)", fontSize: "13px", marginTop: "2px" }, children: "Manage Gnosis Ventures roster, salary structures, statutory accounts, and locations in rows and tables." })
+        /* @__PURE__ */ jsx("p", { style: { color: "var(--text-secondary)", fontSize: "13px", marginTop: "2px" }, children: "Manage NexaPay roster, salary structures, statutory accounts, and locations in rows and tables." })
       ] }),
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }, children: [
         /* @__PURE__ */ jsxs(
@@ -585,7 +585,7 @@ const Employees = () => {
                             padding: "5px 9px",
                             fontSize: "11px",
                             gap: "4px",
-                            background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)",
+                            background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)",
                             color: "#ffffff",
                             fontWeight: 600
                           },
@@ -884,7 +884,7 @@ const Employees = () => {
             "button",
             {
               className: "btn btn-primary",
-              style: { padding: "8px 12px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff", fontWeight: 600 },
+              style: { padding: "8px 12px", fontSize: "12px", gap: "6px", background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", color: "#ffffff", fontWeight: 600 },
               onClick: () => handlePrintSlip(emp),
               title: "Print Salary Slip",
               children: [
@@ -1327,7 +1327,7 @@ const Employees = () => {
             "button",
             {
               className: "btn btn-primary",
-              style: { fontSize: "12px", padding: "8px 16px", gap: "6px", background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)", color: "#ffffff", fontWeight: 600 },
+              style: { fontSize: "12px", padding: "8px 16px", gap: "6px", background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)", color: "#ffffff", fontWeight: 600 },
               onClick: () => handlePrintSlip(viewDetailsEmp),
               children: [
                 /* @__PURE__ */ jsx(Printer, { size: 14 }),

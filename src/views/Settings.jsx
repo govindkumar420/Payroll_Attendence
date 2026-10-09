@@ -7,9 +7,9 @@ import { RoleCredentialsCard } from "../components/RoleCredentialsCard";
 import { getPermissions } from "../utils/permissions";
 const Settings = () => {
   const { auditLogs, activeRole, companyProfile, updateCompanyProfile, triggerSyncNotification, addAuditLog } = useAppState();
-  const [companyName, setCompanyName] = useState(companyProfile.name || "Gnosis Ventures");
+  const [companyName, setCompanyName] = useState(companyProfile.name || "NEXAPAY");
   const [companyAddress, setCompanyAddress] = useState(companyProfile.address || "");
-  const [tagline, setTagline] = useState(companyProfile.tagline || "Workforce & Payroll Operations");
+  const [tagline, setTagline] = useState(companyProfile.tagline || "PAYROLL MANAGEMENT SYSTEM");
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [mfaEnabled, setMfaEnabled] = useState(true);
   const [encryptionStandard, setEncryptionStandard] = useState("AES-256 (GCM)");
@@ -94,10 +94,10 @@ const Settings = () => {
               /* @__PURE__ */ jsx("p", { style: { fontSize: "12px", color: "var(--text-muted)" }, children: "This legal name, emblem, and registered address appear on all official salary slips, reports, and header banners." })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px", background: "var(--bg-secondary)", padding: "8px 16px", borderRadius: "12px", border: "1px solid var(--border-color)" }, children: [
+          /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "14px", background: "var(--bg-secondary)", padding: "10px 16px", borderRadius: "12px", border: "1px solid var(--border-color)", flexWrap: "wrap" }, children: [
             /* @__PURE__ */ jsx("span", { style: { fontSize: "11px", fontWeight: 700, color: "var(--text-muted)" }, children: "Emblem Preview:" }),
-            /* @__PURE__ */ jsx(CompanyLogo, { size: "sm", showText: false }),
-            /* @__PURE__ */ jsx(CompanyLogo, { size: "md", showText: false })
+            /* @__PURE__ */ jsx("div", { style: { background: "#ffffff", padding: "4px 8px", borderRadius: "8px", display: "inline-flex", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }, children: /* @__PURE__ */ jsx(CompanyLogo, { size: "sm" }) }),
+            /* @__PURE__ */ jsx("div", { style: { background: "#ffffff", padding: "6px 10px", borderRadius: "8px", display: "inline-flex", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }, children: /* @__PURE__ */ jsx(CompanyLogo, { size: "md" }) })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("form", { onSubmit: handleSaveCompanyProfile, style: { display: "flex", flexDirection: "column", gap: "16px" }, children: [
@@ -111,7 +111,7 @@ const Settings = () => {
                   required: true,
                   value: companyName,
                   onChange: (e) => setCompanyName(e.target.value),
-                  placeholder: "Gnosis Ventures",
+                  placeholder: "NEXAPAY",
                   style: { fontWeight: 700 }
                 }
               )

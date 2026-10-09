@@ -1,4 +1,4 @@
-# Gnosis Ventures - Payroll & Attendance Portal
+# NEXAPAY - Payroll & Attendance Portal
 
 A React and Vite payroll and attendance demo. The application stores its data in the browser's `localStorage`; it does not require PostgreSQL, a database server, or an API server.
 

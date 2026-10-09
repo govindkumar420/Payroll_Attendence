@@ -152,7 +152,7 @@ const PhotoVerificationModal = ({
             ] }),
             /* @__PURE__ */ jsxs("div", { style: { gridColumn: "span 2", borderTop: "1px solid var(--border-color-solid)", paddingTop: "10px" }, children: [
               /* @__PURE__ */ jsx("span", { style: { color: "var(--text-muted)", display: "block", marginBottom: "2px" }, children: "GPS Geolocation & Office Perimeter" }),
-              /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "6px", color: "#009688" }, children: [
+              /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "6px", color: "var(--accent)" }, children: [
                 /* @__PURE__ */ jsx(MapPin, { size: 14 }),
                 /* @__PURE__ */ jsx("strong", { children: record.location || "Headquarters (San Jose) - Within 20m Perimeter" })
               ] })

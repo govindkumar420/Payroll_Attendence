@@ -126,7 +126,7 @@ const CameraCaptureModal = ({
     const bannerHeight = Math.max(64, Math.floor(height * 0.16));
     ctx.fillStyle = "rgba(9, 13, 22, 0.85)";
     ctx.fillRect(0, height - bannerHeight, width, bannerHeight);
-    ctx.fillStyle = "#009688";
+    ctx.fillStyle = "#16a34a";
     ctx.fillRect(0, height - bannerHeight, width, 3);
     ctx.fillStyle = "#ffffff";
     ctx.font = `bold ${Math.max(14, Math.floor(width * 0.024))}px 'Plus Jakarta Sans', sans-serif`;
@@ -179,7 +179,7 @@ const CameraCaptureModal = ({
     ctx.fillText("FACIAL MATCH: 99.8%", width / 2 - 95, height / 2 - 130);
     ctx.fillStyle = "rgba(9, 13, 22, 0.9)";
     ctx.fillRect(0, height - 70, width, 70);
-    ctx.fillStyle = "#009688";
+    ctx.fillStyle = "#16a34a";
     ctx.fillRect(0, height - 70, width, 3);
     ctx.fillStyle = "#ffffff";
     ctx.font = "bold 15px sans-serif";
@@ -311,7 +311,7 @@ const CameraCaptureModal = ({
             fontSize: "12px"
           }, children: [
             /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-              /* @__PURE__ */ jsx(MapPin, { size: 16, style: { color: "#009688", flexShrink: 0 } }),
+              /* @__PURE__ */ jsx(MapPin, { size: 16, style: { color: "var(--accent)", flexShrink: 0 } }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("strong", { children: "Office Geo-Fence:" }),
                 " ",
@@ -584,10 +584,10 @@ const CameraCaptureModal = ({
                   style: {
                     fontSize: "13px",
                     padding: "10px 22px",
-                    background: "linear-gradient(135deg, #009688 0%, #14b8a6 100%)",
+                    background: "linear-gradient(135deg, #053c78 0%, #0052cc 100%)",
                     color: "#ffffff",
                     fontWeight: 700,
-                    boxShadow: "0 4px 14px rgba(0, 150, 136, 0.35)"
+                    boxShadow: "0 4px 14px rgba(5, 60, 120, 0.35)"
                   },
                   onClick: handleCapture,
                   disabled: !isCameraActive || isCapturing,

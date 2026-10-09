@@ -273,7 +273,7 @@ const ForgotPasswordModal = ({
                   type: "email",
                   value: resetEmail,
                   onChange: (e) => setResetEmail(e.target.value),
-                  placeholder: "user@gnosisventures.com",
+                  placeholder: "user@nexapay.com",
                   required: true
                 }
               ) })

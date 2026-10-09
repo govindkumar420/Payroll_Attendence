@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { getNextEmployeeCode } from "../utils/employeeCode";
 const StateContext = createContext(void 0);
 const APP_ROLES = ["Super Admin", "HR Manager", "Payroll Manager", "Department Manager", "Employee", "Accountant"];
+const STORAGE_KEY = "payroll-attendance:v1";
 const INITIAL_SHIFTS = [
   { id: "S1", name: "Morning Shift", startTime: "09:00", endTime: "17:00", breakTime: 45, gracePeriod: 15, weeklyOff: "Sunday" },
   { id: "S2", name: "Evening Shift", startTime: "17:00", endTime: "01:00", breakTime: 45, gracePeriod: 15, weeklyOff: "Sunday" },
@@ -13,12 +14,32 @@ const INITIAL_EMPLOYEES = [];
 const INITIAL_LEAVES = [];
 const INITIAL_LOANS = [];
 const INITIAL_PAYROLL = [];
+const readStoredState = () => {
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      throw new Error("Stored payroll data must be a JSON object.");
+    }
+    return parsed;
+  } catch (error) {
+    console.error("Unable to read the locally stored payroll data:", error);
+    return { storageError: "Saved browser data could not be read. Check browser storage permissions." };
+  }
+};
 const StateProvider = ({ children }) => {
-  const [theme, setThemeState] = useState("dark");
-  const [activeRole, setActiveRoleState] = useState("Super Admin");
-  const [isAdministratorSession, setIsAdministratorSession] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [personaPhotos, setPersonaPhotos] = useState({
+  const [initialState] = useState(readStoredState);
+  const [storageError, setStorageError] = useState(initialState.storageError || "");
+  const [theme, setThemeState] = useState(initialState.theme || "dark");
+  const [user, setUser] = useState(
+    initialState.user && APP_ROLES.includes(initialState.user.role) ? initialState.user : null,
+  );
+  const [authReady] = useState(true);
+  const activeRole = user?.role || "Employee";
+  const isAdministratorSession = user?.role === "Super Admin";
+  const isLoggedIn = Boolean(user);
+  const [personaPhotos, setPersonaPhotos] = useState(initialState.personaPhotos || {
     "Super Admin": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
     "HR Manager": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150",
     "Payroll Manager": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
@@ -26,49 +47,66 @@ const StateProvider = ({ children }) => {
     "Employee": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150",
     "Accountant": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150"
   });
-  const [companyProfile, setCompanyProfile] = useState({
-    name: "Gnosis Ventures",
+  const [companyProfile, setCompanyProfile] = useState(initialState.companyProfile || {
+    name: "NEXAPAY",
     address: "",
-    tagline: "Payroll & Attendance Operations"
+    tagline: "PAYROLL MANAGEMENT SYSTEM"
   });
-  const [employees, setEmployees] = useState(INITIAL_EMPLOYEES);
-  const [attendance, setAttendance] = useState([]);
-  const [shifts, setShifts] = useState(INITIAL_SHIFTS);
-  const [leaves, setLeaves] = useState(INITIAL_LEAVES);
-  const [holidays, setHolidays] = useState([]);
-  const [loans, setLoans] = useState(INITIAL_LOANS);
-  const [payroll, setPayroll] = useState(INITIAL_PAYROLL);
-  const [auditLogs, setAuditLogs] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  const [employees, setEmployees] = useState(initialState.employees || INITIAL_EMPLOYEES);
+  const [attendance, setAttendance] = useState(initialState.attendance || []);
+  const [shifts, setShifts] = useState(initialState.shifts || INITIAL_SHIFTS);
+  const [leaves, setLeaves] = useState(initialState.leaves || INITIAL_LEAVES);
+  const [holidays, setHolidays] = useState(initialState.holidays || []);
+  const [loans, setLoans] = useState(initialState.loans || INITIAL_LOANS);
+  const [payroll, setPayroll] = useState(initialState.payroll || INITIAL_PAYROLL);
+  const [auditLogs, setAuditLogs] = useState(initialState.auditLogs || []);
+  const [notifications, setNotifications] = useState(initialState.notifications || []);
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
-  const login = (role) => {
-    setActiveRoleState(role);
-    setIsAdministratorSession(role === "Super Admin");
-    setIsLoggedIn(true);
-    addAuditLog("User Login", `Successfully logged in as ${role}`);
-    triggerSyncNotification(`\u{1F44B} Welcome back! Authenticated as ${role}`);
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        theme,
+        user,
+        personaPhotos,
+        companyProfile,
+        employees,
+        attendance,
+        shifts,
+        leaves,
+        holidays,
+        loans,
+        payroll,
+        auditLogs,
+        notifications,
+      }));
+      setStorageError("");
+    } catch (error) {
+      console.error("Unable to save payroll data in browser storage:", error);
+      setStorageError("Changes could not be saved in this browser. Free up local storage space or check browser permissions.");
+    }
+  }, [theme, user, personaPhotos, companyProfile, employees, attendance, shifts, leaves, holidays, loans, payroll, auditLogs, notifications]);
+  const login = (email, role) => {
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      throw new Error("Enter a valid email address.");
+    }
+    if (!APP_ROLES.includes(role)) {
+      throw new Error("Select a valid demo role.");
+    }
+    setUser({ email: normalizedEmail, role });
+    addAuditLog("Local Demo Login", `Opened a local demo session as ${role}`);
+    triggerSyncNotification(`Local demo session opened as ${role}`);
   };
   const logout = () => {
-    setIsLoggedIn(false);
-    setIsAdministratorSession(false);
-    addAuditLog("User Logout", `Logged out from ${activeRole} session`);
-    triggerSyncNotification(`\u{1F6AA} Signed out from ${activeRole} session`);
+    addAuditLog("Local Demo Logout", `Closed local demo session for ${activeRole}`);
+    setUser(null);
   };
   const updatePersonaPhoto = (role, photoUrl) => {
     setPersonaPhotos((prev) => ({ ...prev, [role]: photoUrl }));
     addAuditLog("Profile Picture Update", `Updated profile photo for ${role}`);
     triggerSyncNotification(`\u{1F4F8} Profile picture updated for ${role}`);
-  };
-  const updateUserPassword = (role, _newPass) => {
-    if (!isAdministratorSession) {
-      triggerSyncNotification("Only the administrator can change account credentials.");
-      return false;
-    }
-    addAuditLog("Password Reset", `Password changed successfully for ${role}`);
-    triggerSyncNotification(`\u{1F511} Password updated successfully for ${role}`);
-    return true;
   };
   const updateCompanyProfile = (profile) => {
     setCompanyProfile((prev) => ({ ...prev, ...profile }));
@@ -441,15 +479,13 @@ const StateProvider = ({ children }) => {
     triggerSyncNotification(`\u{1F4E7} Notification sent: Payslips emailed to all active employees.`);
   };
   const setActiveRole = (role) => {
-    if (!isAdministratorSession) {
-      triggerSyncNotification("Only the administrator can switch roles.");
-      return false;
-    }
     if (!APP_ROLES.includes(role)) {
       throw new Error(`Unknown application role: ${role}`);
     }
-    setActiveRoleState(role);
-    addAuditLog("Role Switch", `Switched active workspace session to: ${role}`);
+    if (role !== activeRole) {
+      triggerSyncNotification("Roles are assigned to accounts and cannot be switched in a signed-in session.");
+      return false;
+    }
     return true;
   };
   const setAttendanceRecords = (records) => {
@@ -473,11 +509,13 @@ const StateProvider = ({ children }) => {
     auditLogs,
     notifications,
     isLoggedIn,
+    authReady,
+    storageError,
+    user,
     login,
     logout,
     personaPhotos,
     updatePersonaPhoto,
-    updateUserPassword,
     onboardEmployee,
     getNextEmpCode,
     updateEmployee,

@@ -97,14 +97,14 @@ CREATE INDEX IF NOT EXISTS idx_leave_requests_employee ON leave_requests(employe
 CREATE INDEX IF NOT EXISTS idx_payroll_runs_employee ON payroll_runs(employee_id, period_end);
 
 INSERT INTO companies (name, address, tagline)
-VALUES ('Gnosis Ventures', 'Bengaluru, India', 'Payroll & Attendance Operations')
+VALUES ('NEXAPAY', 'Bengaluru, India', 'PAYROLL MANAGEMENT SYSTEM')
 ON CONFLICT DO NOTHING;
 
 INSERT INTO employees (id, code, name, email, role, department, shift_id, manager_id, status, joining_date, base_salary)
 VALUES
-  ('EMP-1001', '2001', 'Aisha Patel', 'aisha@gnosisventures.com', 'Super Admin', 'Operations', 'S1', NULL, 'Active', '2023-01-10', 220000),
-  ('EMP-1002', '2002', 'Rohan Mehta', 'rohan@gnosisventures.com', 'HR Manager', 'Human Resources', 'S2', 'EMP-1001', 'Active', '2023-03-18', 180000),
-  ('EMP-1003', '2003', 'Nisha Rao', 'nisha@gnosisventures.com', 'Employee', 'Engineering', 'S3', 'EMP-1002', 'Active', '2024-02-12', 140000)
+  ('EMP-1001', '2001', 'Aisha Patel', 'aisha@nexapay.com', 'Super Admin', 'Operations', 'S1', NULL, 'Active', '2023-01-10', 220000),
+  ('EMP-1002', '2002', 'Rohan Mehta', 'rohan@nexapay.com', 'HR Manager', 'Human Resources', 'S2', 'EMP-1001', 'Active', '2023-03-18', 180000),
+  ('EMP-1003', '2003', 'Nisha Rao', 'nisha@nexapay.com', 'Employee', 'Engineering', 'S3', 'EMP-1002', 'Active', '2024-02-12', 140000)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO attendance (employee_id, attendance_date, check_in, check_out, shift_name, status, total_hours, notes)

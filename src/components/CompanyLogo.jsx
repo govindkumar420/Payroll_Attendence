@@ -1,12 +1,12 @@
-import logo from "../data/logo.webp";
+import logo from "../data/nexapay-logo.png";
 
-const CompanyLogo = ({ size = "md", className = "" }) => {
+const CompanyLogo = ({ size = "md", className = "", style = {} }) => {
   const heights = {
-    xs: 28,
-    sm: 38,
-    md: 50,
-    lg: 72,
-    xl: 88
+    xs: 26,
+    sm: 36,
+    md: 48,
+    lg: 64,
+    xl: 82
   };
   const height = heights[size] || heights.md;
 
@@ -14,13 +14,15 @@ const CompanyLogo = ({ size = "md", className = "" }) => {
     <img
       className={`company-logo ${className}`}
       src={logo}
-      alt="Gnosis Ventures"
+      alt="Payroll NEXAPAY"
       style={{
         display: "block",
-        width: `${height * 2.64}px`,
         height: `${height}px`,
+        width: "auto",
+        maxWidth: "100%",
         objectFit: "contain",
-        flexShrink: 0
+        flexShrink: 0,
+        ...style
       }}
     />
   );

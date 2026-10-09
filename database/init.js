@@ -36,24 +36,24 @@ const run = (sql, params = []) => new Promise((resolve, reject) => {
 
 const seedData = async () => {
   await run("INSERT INTO companies (name, address, tagline) VALUES (?, ?, ?)", [
-    'Gnosis Ventures',
+    'NEXAPAY',
     'Bengaluru, India',
-    'Payroll & Attendance Operations'
+    'PAYROLL MANAGEMENT SYSTEM'
   ]);
 
   await run(
     "INSERT INTO employees (id, code, name, email, role, department, shift_id, manager_id, status, joining_date, base_salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    ['EMP-1001', '2001', 'Aisha Patel', 'aisha@gnosisventures.com', 'Super Admin', 'Operations', 'S1', null, 'Active', '2023-01-10', 220000]
+    ['EMP-1001', '2001', 'Aisha Patel', 'aisha@nexapay.com', 'Super Admin', 'Operations', 'S1', null, 'Active', '2023-01-10', 220000]
   );
 
   await run(
     "INSERT INTO employees (id, code, name, email, role, department, shift_id, manager_id, status, joining_date, base_salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    ['EMP-1002', '2002', 'Rohan Mehta', 'rohan@gnosisventures.com', 'HR Manager', 'Human Resources', 'S2', 'EMP-1001', 'Active', '2023-03-18', 180000]
+    ['EMP-1002', '2002', 'Rohan Mehta', 'rohan@nexapay.com', 'HR Manager', 'Human Resources', 'S2', 'EMP-1001', 'Active', '2023-03-18', 180000]
   );
 
   await run(
     "INSERT INTO employees (id, code, name, email, role, department, shift_id, manager_id, status, joining_date, base_salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    ['EMP-1003', '2003', 'Nisha Rao', 'nisha@gnosisventures.com', 'Employee', 'Engineering', 'S3', 'EMP-1002', 'Active', '2024-02-12', 140000]
+    ['EMP-1003', '2003', 'Nisha Rao', 'nisha@nexapay.com', 'Employee', 'Engineering', 'S3', 'EMP-1002', 'Active', '2024-02-12', 140000]
   );
 
   await run("INSERT INTO attendance (employee_id, attendance_date, check_in, check_out, shift_name, status, total_hours, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [

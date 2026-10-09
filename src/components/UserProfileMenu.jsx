@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useRef, useEffect } from "react";
-import { Camera, KeyRound, LogOut, ShieldCheck, ChevronRight } from "lucide-react";
+import { Camera, LogOut, ChevronRight } from "lucide-react";
 const UserProfileMenu = ({
   isOpen,
   onClose,
@@ -9,9 +9,6 @@ const UserProfileMenu = ({
   photoUrl,
   email,
   onChangePhotoClick,
-  onForgotPasswordClick,
-  onViewCredentialsClick,
-  isAdministratorSession,
   onLogoutClick
 }) => {
   const menuRef = useRef(null);
@@ -98,71 +95,13 @@ const UserProfileMenu = ({
               },
               children: [
                 /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
-                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(0, 150, 136, 0.1)", color: "#009688" }, children: /* @__PURE__ */ jsx(Camera, { size: 16 }) }),
+                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "var(--primary-light)", color: "var(--primary)" }, children: /* @__PURE__ */ jsx(Camera, { size: 16 }) }),
                   /* @__PURE__ */ jsx("span", { children: "Change Profile Picture" })
                 ] }),
                 /* @__PURE__ */ jsx(ChevronRight, { size: 16, style: { color: "var(--text-muted)" } })
               ]
             }
           ),
-          isAdministratorSession && /* @__PURE__ */ jsxs(
-            "button",
-            {
-              className: "btn btn-outline",
-              style: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "10px 14px",
-                border: "none",
-                borderRadius: "10px",
-                width: "100%",
-                textAlign: "left",
-                color: "var(--text-primary)",
-                fontSize: "13px"
-              },
-              onClick: () => {
-                onClose();
-                onForgotPasswordClick();
-              },
-              children: [
-                /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
-                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(0, 143, 131, 0.1)", color: "var(--primary)" }, children: /* @__PURE__ */ jsx(KeyRound, { size: 16 }) }),
-                  /* @__PURE__ */ jsx("span", { children: "Forgot / Change Password" })
-                ] }),
-                /* @__PURE__ */ jsx(ChevronRight, { size: 16, style: { color: "var(--text-muted)" } })
-              ]
-            }
-          ),
-          isAdministratorSession && /* @__PURE__ */ jsxs(
-            "button",
-            {
-              className: "btn btn-outline",
-              style: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "10px 14px",
-                border: "none",
-                borderRadius: "10px",
-                width: "100%",
-                textAlign: "left",
-                color: "var(--text-primary)",
-                fontSize: "13px"
-              },
-              onClick: () => {
-                onClose();
-                onViewCredentialsClick();
-              },
-              children: [
-                /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
-                  /* @__PURE__ */ jsx("div", { style: { padding: "6px", borderRadius: "8px", background: "rgba(16, 185, 129, 0.1)", color: "var(--success)" }, children: /* @__PURE__ */ jsx(ShieldCheck, { size: 16 }) }),
-                  /* @__PURE__ */ jsx("span", { children: "View Access Credentials" })
-                ] }),
-                /* @__PURE__ */ jsx(ChevronRight, { size: 16, style: { color: "var(--text-muted)" } })
-              ]
-            }
-          )
         ] }),
         /* @__PURE__ */ jsx("div", { style: { height: "1px", background: "var(--border-color-solid)", margin: "4px 6px" } }),
         /* @__PURE__ */ jsxs(

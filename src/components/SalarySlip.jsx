@@ -5,7 +5,7 @@ import { CompanyLogo } from "./CompanyLogo";
 const SalarySlip = ({
   payroll,
   employee,
-  companyName = "Gnosis Ventures",
+  companyName = "NEXAPAY",
   companyAddress = "",
   onClose
 }) => {
